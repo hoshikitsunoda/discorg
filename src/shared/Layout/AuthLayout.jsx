@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   container: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(4),
     maxWidth: 380,
   },
 }))
@@ -36,6 +36,7 @@ const AuthLayout = ({ title, children }) => {
           display="flex"
           justifyContent="center"
           alignItems="center"
+          flexDirection="column"
         >
           {children}
         </Box>

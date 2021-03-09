@@ -4,18 +4,24 @@ import {
   makeStyles,
   Box,
   Typography,
-  Link,
 } from '@material-ui/core'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import { Link } from 'react-router-dom'
 
 import AuthLayout from '../shared/Layout/AuthLayout'
 
 const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(2),
+    padding: theme.spacing(1.5),
   },
   link: {
     marginTop: theme.spacing(1),
+
+    '& a': {
+      fontSize: 14,
+      textDecoration: 'none',
+    },
   },
 }))
 
@@ -56,6 +62,7 @@ const Login = () => {
         >
           Sign In
         </Button>
+
         <Button
           className={classes.button}
           type="submit"
@@ -63,7 +70,7 @@ const Login = () => {
           variant="outlined"
           color="primary"
         >
-          Sign Up
+          <Link to="/signup">Sign Up</Link>
         </Button>
         <Box width={1} className={classes.link}>
           <Typography>

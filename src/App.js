@@ -1,9 +1,19 @@
-import Login from './pages/Login'
+import { Switch, Route } from 'react-router-dom'
+
+import SignIn from './pages/SignIn'
+import SignUp from './pages/SignUp'
 
 function App() {
   return (
     <>
-      <Login />
+      <Switch>
+        <Route path="/signup">
+          <SignUp />
+        </Route>
+        <Route path="/signin">
+          <SignIn />
+        </Route>
+      </Switch>
     </>
   )
 }

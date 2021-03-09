@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import {
   TextField,
   Button,
@@ -7,8 +9,10 @@ import {
 } from '@material-ui/core'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import AuthLayout from '../shared/Layout/AuthLayout'
+import { auth } from '../services/firebase'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -27,6 +31,28 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUp = () => {
   const classes = useStyles()
+  const history = useHistory()
+  const [userInfo, setUserInfo] = useState({})
+
+  const handleChange = ({ target: { name, value } }) => {
+    setUserInfo({
+      ...userInfo,
+      [name]: value,
+    })
+  }
+
+  const { email, password } = userInfo
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    try {
+      await auth().createUserWithEmailAndPassword(email, password)
+      history.push('/dashboard')
+    } catch (err) {
+      toast.error(err.message)
+    }
+  }
+
   return (
     <AuthLayout title="Sign Up">
       <AccountCircleIcon fontSize="large" />
@@ -41,6 +67,7 @@ const SignUp = () => {
           name="email"
           autoComplete="email"
           autoFocus
+          onChange={handleChange}
         />
         <TextField
           variant="filled"
@@ -52,8 +79,9 @@ const SignUp = () => {
           type="password"
           id="password"
           autoComplete="current-password"
+          onChange={handleChange}
         />
-        <TextField
+        {/* <TextField
           variant="filled"
           margin="normal"
           required
@@ -63,13 +91,14 @@ const SignUp = () => {
           type="password"
           id="confirm-password"
           autoComplete="current-password"
-        />
+        /> */}
         <Button
           className={classes.button}
           type="submit"
           fullWidth
           variant="contained"
           color="primary"
+          onClick={handleSubmit}
         >
           Sign Up
         </Button>

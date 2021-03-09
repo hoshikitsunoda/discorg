@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import {
   TextField,
   Button,
@@ -7,8 +9,10 @@ import {
 } from '@material-ui/core'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import AuthLayout from '../shared/Layout/AuthLayout'
+import { auth } from '../services/firebase'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -25,8 +29,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Login = () => {
+const SignIn = () => {
   const classes = useStyles()
+  const history = useHistory()
+  const [userInfo, setUserInfo] = useState({})
+
+  const handleChange = ({ target: { name, value } }) => {
+    setUserInfo({
+      ...userInfo,
+      [name]: value,
+    })
+  }
+
+  const { email, password } = userInfo
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    try {
+      await auth().signInWithEmailAndPassword(email, password)
+      history.push('/dashboard')
+    } catch (err) {
+      toast.error(err.message)
+    }
+  }
+
   return (
     <AuthLayout title="Sign In">
       <AccountCircleIcon fontSize="large" />
@@ -41,6 +67,7 @@ const Login = () => {
           name="email"
           autoComplete="email"
           autoFocus
+          onChange={handleChange}
         />
         <TextField
           variant="filled"
@@ -52,6 +79,7 @@ const Login = () => {
           type="password"
           id="password"
           autoComplete="current-password"
+          onChange={handleChange}
         />
         <Button
           className={classes.button}
@@ -59,10 +87,10 @@ const Login = () => {
           fullWidth
           variant="contained"
           color="primary"
+          onClick={handleSubmit}
         >
           Sign In
         </Button>
-
         <Button
           className={classes.button}
           type="submit"
@@ -74,7 +102,7 @@ const Login = () => {
         </Button>
         <Box width={1} className={classes.link}>
           <Typography>
-            <Link href="/forgot-password" color="inherit">
+            <Link to="/forgot-password" color="inherit">
               Forgot password?
             </Link>
           </Typography>
@@ -84,4 +112,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default SignIn

@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import {
   TextField,
   Button,
@@ -9,10 +7,9 @@ import {
 } from '@material-ui/core'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import { Link } from 'react-router-dom'
-import { toast } from 'react-toastify'
 
 import AuthLayout from '../shared/Layout/AuthLayout'
-import { auth } from '../services/firebase'
+import useAuth from '../hooks/useAuth'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -31,26 +28,14 @@ const useStyles = makeStyles((theme) => ({
 
 const SignIn = () => {
   const classes = useStyles()
-  const history = useHistory()
-  const [userInfo, setUserInfo] = useState({})
 
-  const handleChange = ({ target: { name, value } }) => {
-    setUserInfo({
-      ...userInfo,
-      [name]: value,
-    })
-  }
+  const { signIn, handleChange, data: userInfo } = useAuth()
 
   const { email, password } = userInfo
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
-    try {
-      await auth().signInWithEmailAndPassword(email, password)
-      history.push('/dashboard')
-    } catch (err) {
-      toast.error(err.message)
-    }
+    signIn(email, password)
   }
 
   return (

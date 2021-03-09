@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const classes = useStyles()
   return (
-    <AuthLayout title="Login">
+    <AuthLayout title="Sign In">
       <AccountCircleIcon fontSize="large" />
       <form>
         <TextField

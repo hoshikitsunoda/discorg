@@ -9,6 +9,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import { Link } from 'react-router-dom'
 
 import AuthLayout from '../shared/Layout/AuthLayout'
+import useAuth from '../hooks/useAuth'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -27,6 +28,15 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUp = () => {
   const classes = useStyles()
+  const { signUp, handleChange, data: userInfo } = useAuth()
+
+  const { email, password } = userInfo
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    signUp(email, password)
+  }
+
   return (
     <AuthLayout title="Sign Up">
       <AccountCircleIcon fontSize="large" />
@@ -41,6 +51,7 @@ const SignUp = () => {
           name="email"
           autoComplete="email"
           autoFocus
+          onChange={handleChange}
         />
         <TextField
           variant="filled"
@@ -52,6 +63,7 @@ const SignUp = () => {
           type="password"
           id="password"
           autoComplete="current-password"
+          onChange={handleChange}
         />
         <TextField
           variant="filled"
@@ -70,6 +82,7 @@ const SignUp = () => {
           fullWidth
           variant="contained"
           color="primary"
+          onClick={handleSubmit}
         >
           Sign Up
         </Button>

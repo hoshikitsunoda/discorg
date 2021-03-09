@@ -11,11 +11,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
     height: '100vh',
+    padding: 0,
   },
 }))
 
 const MainLayout = ({ title, children }) => {
   const classes = useStyles()
+
   return (
     <>
       <Helmet>
@@ -28,7 +30,7 @@ const MainLayout = ({ title, children }) => {
       </Helmet>
       <Container maxWidth={false} className={classes.root}>
         <Header />
-        {children}
+        <main>{children}</main>
       </Container>
     </>
   )

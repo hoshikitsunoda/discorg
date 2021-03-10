@@ -9,6 +9,7 @@ const usePostData = () => {
     setSubmitting(true)
     try {
       await firebase.database().ref(`records/${id}`).set(data)
+      toast.success('Success!')
     } catch (err) {
       toast.error(err.message)
       setSubmitting(false)

@@ -2,13 +2,19 @@ import { useEffect } from 'react'
 import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 
-import useGetData from '../../hooks/useGetData'
+import useGetUser from '../../hooks/useGetUser'
 
 const Header = () => {
-  const { data, getUser } = useGetData()
+  const { data, getUser } = useGetUser()
 
   useEffect(() => {
-    getUser()
+    let isMounted = true
+    if (isMounted) {
+      getUser()
+    }
+    return () => {
+      isMounted = false
+    }
   }, [getUser])
 
   const { email, uid } = data

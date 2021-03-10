@@ -1,10 +1,12 @@
 import { useEffect } from 'react'
 
 import MainLayout from '../hoc/Layout/MainLayout'
-import useGetRecords from '../hooks/useGetRecords'
+import { useGetRecords, useToggle } from '../hooks'
+import AddRecord from '../components/AddRecord'
 
 const Dashboard = () => {
   const { data, loading, getRecords } = useGetRecords()
+  const { value, toggleValue } = useToggle()
 
   useEffect(() => {
     let isMounted = true
@@ -27,7 +29,15 @@ const Dashboard = () => {
     return 'Loading...'
   }
 
-  return <MainLayout title="dashboard">{dataKeys}</MainLayout>
+  return (
+    <>
+      <MainLayout title="dashboard">
+        {dataKeys}
+        <button onClick={toggleValue}>Click</button>
+        <AddRecord open={value} handleClose={toggleValue} />
+      </MainLayout>
+    </>
+  )
 }
 
 export default Dashboard

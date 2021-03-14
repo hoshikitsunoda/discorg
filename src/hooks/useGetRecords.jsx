@@ -1,22 +1,20 @@
 import { useState, useCallback } from 'react'
 import { toast } from 'react-toastify'
-import firebase from 'firebase'
+
+import axios from '../utils/axios-instance'
 
 const useGetRecords = () => {
   const [data, setData] = useState({})
   const [loading, setLoading] = useState(false)
 
   const getRecords = useCallback(async () => {
-    const recordRef = firebase.database().ref('/records')
     setLoading(true)
     try {
-      recordRef.on('value', (snapshot) => {
-        if (snapshot) {
-          const data = snapshot.val()
-          setData(data)
-          setLoading(false)
-        }
-      })
+      const { data } = await axios.get('/records.json')
+      if (data) {
+        setData(data)
+        setLoading(false)
+      }
     } catch (err) {
       toast.error(err.message)
       setLoading(false)

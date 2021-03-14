@@ -41,10 +41,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const AddRecord = ({ open, handleClose, uid }) => {
+const AddRecord = ({ open, handleClose, uid, getRecords }) => {
   const classes = useStyles()
   const [recordInfo, setRecordInfo] = useState({})
-  const [imagePreview, setImagePreview] = useState('')
+  const [imageUrl, setImageUrl] = useState('')
   const { submitting, close, postData, error } = usePostData()
 
   const handleChange = ({ target: { name, value } }) => {
@@ -58,16 +58,18 @@ const AddRecord = ({ open, handleClose, uid }) => {
     const formData = {
       ...recordInfo,
       id: uid,
+      imageUrl,
     }
-    postData(formData, uid)
+    postData(formData)
   }
 
   useEffect(() => {
     // close modal if close state from usePostData is true
     if (close) {
       handleClose()
+      getRecords()
     }
-  }, [handleClose, close])
+  }, [handleClose, close, getRecords])
 
   return (
     <CustomModal open={open} handleClose={handleClose}>
@@ -91,8 +93,8 @@ const AddRecord = ({ open, handleClose, uid }) => {
               <AddRecordForm handleChange={handleChange} />
             </Grid>
             <Grid item xs={4} className={classes.rightCol}>
-              <ImageUpload uid={uid} handlePreview={setImagePreview} />
-              <img src={imagePreview} alt="" />
+              <ImageUpload uid={uid} handlePreview={setImageUrl} />
+              <img src={imageUrl} alt="" />
               <Box className={classes.buttons}>
                 <Button
                   variant="contained"

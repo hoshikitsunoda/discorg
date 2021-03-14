@@ -32,9 +32,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Panel = ({ recordData, imgSrc, uid }) => {
+const Panel = ({ recordData, uid }) => {
   const classes = useStyles()
-  const { artist, title, releaseYear, label, country } = recordData[uid]
+  const { artist, title, releaseYear, label, country, imageUrl } = recordData[
+    uid
+  ]
 
   const shortenString = (string, maxLength) =>
     string?.length > maxLength
@@ -44,10 +46,10 @@ const Panel = ({ recordData, imgSrc, uid }) => {
   return (
     <Card className={classes.root}>
       <CardActionArea>
-        {!!(imgSrc && imgSrc[uid]) ? (
+        {!!imageUrl ? (
           <img
             className={classes.media}
-            src={imgSrc[uid]}
+            src={imageUrl}
             alt={`${artist} - ${title}`}
           />
         ) : (

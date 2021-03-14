@@ -5,14 +5,13 @@ import { v4 as uuidv4 } from 'uuid'
 import MainLayout from '../hoc/Layout/MainLayout'
 import { useGetRecords, useToggle } from '../hooks'
 import AddRecord from '../components/AddRecord'
+import RecordList from '../components/RecordList'
 
 const Dashboard = () => {
   const { data, loading, getRecords } = useGetRecords()
   const { value, toggleValue } = useToggle()
   const [imageSrc, setImageSrc] = useState({})
   const uid = uuidv4()
-
-  const dataArray = Object.keys(data)
 
   useEffect(() => {
     const imageStorageRef = firebase.storage().ref().child('images')
@@ -41,19 +40,6 @@ const Dashboard = () => {
     }
   }, [getRecords])
 
-  const dataKeys = dataArray.map((item) => {
-    return (
-      <div key={item}>
-        <img
-          src={imageSrc[item]}
-          alt={`${data[item]?.artist} - ${data[item]?.title}`}
-        />
-        <div>{data[item]?.artist}</div>
-        <div>{data[item]?.title}</div>
-      </div>
-    )
-  })
-
   if (loading) {
     return 'Loading...'
   }
@@ -61,7 +47,7 @@ const Dashboard = () => {
   return (
     <>
       <MainLayout title="dashboard">
-        {dataKeys}
+        <RecordList recordData={data} imgSrc={imageSrc} />
         <button onClick={toggleValue}>Click</button>
         <AddRecord open={value} handleClose={toggleValue} uid={uid} />
       </MainLayout>

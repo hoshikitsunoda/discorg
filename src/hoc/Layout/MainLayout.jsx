@@ -30,7 +30,7 @@ const MainLayout = ({ title, children }) => {
       </Helmet>
       <Container maxWidth={false} className={classes.root}>
         <Header />
-        <main>{children}</main>
+        <Container component="main">{children}</Container>
       </Container>
     </>
   )

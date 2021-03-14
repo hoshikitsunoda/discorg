@@ -5,6 +5,7 @@ import {
   CardContent,
   Typography,
 } from '@material-ui/core'
+import Skeleton from '@material-ui/lab/Skeleton'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     width: '100%',
+    minHeight: 210,
   },
   textRight: {
     textAlign: 'right',
@@ -32,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Panel = ({ recordData, imgSrc, uid }) => {
   const classes = useStyles()
-
   const { artist, title, releaseYear, label, country } = recordData[uid]
 
   const shortenString = (string, maxLength) =>
@@ -43,11 +44,15 @@ const Panel = ({ recordData, imgSrc, uid }) => {
   return (
     <Card className={classes.root}>
       <CardActionArea>
-        <img
-          className={classes.media}
-          src={imgSrc[uid]}
-          alt={`${artist} - ${title}`}
-        />
+        {!!(imgSrc && imgSrc[uid]) ? (
+          <img
+            className={classes.media}
+            src={imgSrc[uid]}
+            alt={`${artist} - ${title}`}
+          />
+        ) : (
+          <Skeleton variant="rect" width={345} height={200} />
+        )}
         <CardContent>
           <Typography variant="h6" component="h2" className={classes.title}>
             {shortenString(title, 18)}

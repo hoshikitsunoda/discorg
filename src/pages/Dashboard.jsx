@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import firebase from 'firebase'
+import { useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import MainLayout from '../hoc/Layout/MainLayout'
@@ -10,34 +9,10 @@ import RecordList from '../components/RecordList'
 const Dashboard = () => {
   const { data, loading, getRecords } = useGetRecords()
   const { value, toggleValue } = useToggle()
-  const [imageSrc, setImageSrc] = useState({})
   const uid = uuidv4()
 
   useEffect(() => {
-    const imageStorageRef = firebase.storage().ref().child('images')
-    let isMounted = true
-    if (isMounted) {
-      getRecords()
-      imageStorageRef
-        .listAll()
-        .then((res) => {
-          res.items.forEach((itemRef) => {
-            const fileName = itemRef.name.split('.').slice(0, -1).join('')
-            itemRef
-              .getDownloadURL()
-              .then((url) =>
-                setImageSrc((src) => ({ ...src, [fileName]: url }))
-              )
-          })
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    }
-
-    return () => {
-      isMounted = false
-    }
+    getRecords()
   }, [getRecords])
 
   if (loading) {
@@ -47,9 +22,14 @@ const Dashboard = () => {
   return (
     <>
       <MainLayout title="dashboard">
-        <RecordList recordData={data} imgSrc={imageSrc} />
+        {data ? <RecordList recordData={data} /> : 'No record to show'}
         <button onClick={toggleValue}>Click</button>
-        <AddRecord open={value} handleClose={toggleValue} uid={uid} />
+        <AddRecord
+          open={value}
+          handleClose={toggleValue}
+          uid={uid}
+          getRecords={getRecords}
+        />
       </MainLayout>
     </>
   )

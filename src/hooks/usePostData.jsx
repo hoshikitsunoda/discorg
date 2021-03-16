@@ -1,16 +1,17 @@
 import { useState, useCallback } from 'react'
 import { toast } from 'react-toastify'
-import firebase from 'firebase'
+
+import axios from '../utils/axios-instance'
 
 const usePostData = () => {
   const [submitting, setSubmitting] = useState(false)
   const [close, setClose] = useState(false)
   const [error, setError] = useState('')
 
-  const postData = useCallback(async (data, id) => {
+  const postData = useCallback(async (data) => {
     setSubmitting(true)
     try {
-      await firebase.database().ref(`records/${id}`).set(data)
+      await axios.post(`/records.json`, data)
       toast.success('Success!')
       setSubmitting(false)
       setClose(true)

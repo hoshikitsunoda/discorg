@@ -6,13 +6,14 @@ import {
   Grid,
   Button,
   CircularProgress,
+  Input,
   makeStyles,
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
+import firebase from 'firebase'
 
 import CustomModal from '../shared/Modal'
 import AddRecordForm from './AddRecordForm'
-import ImageUpload from './ImageUpload'
 import { usePostData } from '../../hooks'
 
 const useStyles = makeStyles((theme) => ({
@@ -41,10 +42,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const AddRecord = ({ open, handleClose, uid }) => {
+const AddRecord = ({ open, handleClose, uid, getRecords }) => {
   const classes = useStyles()
   const [recordInfo, setRecordInfo] = useState({})
-  const [imagePreview, setImagePreview] = useState('')
+  const [imageUrl, setImageUrl] = useState('')
   const { submitting, close, postData, error } = usePostData()
 
   const handleChange = ({ target: { name, value } }) => {
@@ -54,20 +55,29 @@ const AddRecord = ({ open, handleClose, uid }) => {
     })
   }
 
+  const handleFile = ({ target: { files } }) => {
+    setImageUrl(URL.createObjectURL(files[0]))
+  }
+
   const handleSubmit = () => {
+    const storageRef = firebase.storage().ref('images')
+    storageRef.child(`${uid}.jpg`).put(imageUrl)
+
     const formData = {
       ...recordInfo,
       id: uid,
+      imageUrl,
     }
-    postData(formData, uid)
+    postData(formData)
   }
 
   useEffect(() => {
     // close modal if close state from usePostData is true
     if (close) {
       handleClose()
+      getRecords()
     }
-  }, [handleClose, close])
+  }, [handleClose, close, getRecords])
 
   return (
     <CustomModal open={open} handleClose={handleClose}>
@@ -91,8 +101,8 @@ const AddRecord = ({ open, handleClose, uid }) => {
               <AddRecordForm handleChange={handleChange} />
             </Grid>
             <Grid item xs={4} className={classes.rightCol}>
-              <ImageUpload uid={uid} handlePreview={setImagePreview} />
-              <img src={imagePreview} alt="" />
+              <Input type="file" onChange={handleFile} />
+              <img src={imageUrl} alt="" />
               <Box className={classes.buttons}>
                 <Button
                   variant="contained"

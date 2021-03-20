@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react'
 import firebase from 'firebase'
 import { useDropzone } from 'react-dropzone'
+import { toast } from 'react-toastify'
 
 const baseStyle = {
   padding: '0 20px',
@@ -27,19 +28,25 @@ const rejectStyle = {
   borderColor: '#ff1744',
 }
 
-const ImageUpload = ({ uid, handleFile, handleUrl }) => {
+const ImageUpload = ({ uid, handleFile, handleUrl, setUploaded }) => {
   const onDrop = useCallback(
     async (acceptedFiles) => {
-      handleFile(URL.createObjectURL(acceptedFiles[0]))
-      const storageRef = firebase
-        .storage()
-        .ref()
-        .child('images')
-        .child(`${uid}.jpg`)
-      await storageRef.put(acceptedFiles[0])
-      storageRef.getDownloadURL().then((url) => handleUrl(url))
+      setUploaded(true)
+      try {
+        handleFile(URL.createObjectURL(acceptedFiles[0]))
+        const storageRef = firebase
+          .storage()
+          .ref()
+          .child('images')
+          .child(`${uid}.jpg`)
+        await storageRef.put(acceptedFiles[0])
+        storageRef.getDownloadURL().then((url) => handleUrl(url))
+      } catch (err) {
+        toast.error(err.message)
+        setUploaded(false)
+      }
     },
-    [handleFile, handleUrl, uid]
+    [handleFile, handleUrl, setUploaded, uid]
   )
 
   const {

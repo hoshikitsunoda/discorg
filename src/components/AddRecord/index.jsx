@@ -14,6 +14,7 @@ import CustomModal from '../shared/Modal'
 import AddRecordForm from './AddRecordForm'
 import ImageUpload from './ImageUpload'
 import { usePostData } from '../../hooks'
+import ImagePreview from '../AddRecord/ImagePreview'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -44,8 +45,11 @@ const useStyles = makeStyles((theme) => ({
 const AddRecord = ({ open, handleClose, uid, getRecords }) => {
   const classes = useStyles()
   const [recordInfo, setRecordInfo] = useState({})
+  // stores as full url
   const [imageUrl, setImageUrl] = useState('')
+  // stores as blob
   const [imagePreview, setImagePreview] = useState('')
+  const [uploaded, setUploaded] = useState(false)
 
   const { submitting, close, postData, error } = usePostData()
 
@@ -99,8 +103,9 @@ const AddRecord = ({ open, handleClose, uid, getRecords }) => {
                 uid={uid}
                 handleFile={setImagePreview}
                 handleUrl={setImageUrl}
+                setUploaded={setUploaded}
               />
-              <img src={imagePreview} alt="" />
+              <ImagePreview imagePreview={imagePreview} uploaded={uploaded} />
               <Box className={classes.buttons}>
                 <Button
                   variant="contained"

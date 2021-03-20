@@ -6,14 +6,13 @@ import {
   Grid,
   Button,
   CircularProgress,
-  Input,
   makeStyles,
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import firebase from 'firebase'
 
 import CustomModal from '../shared/Modal'
 import AddRecordForm from './AddRecordForm'
+import ImageUpload from './ImageUpload'
 import { usePostData } from '../../hooks'
 
 const useStyles = makeStyles((theme) => ({
@@ -46,6 +45,8 @@ const AddRecord = ({ open, handleClose, uid, getRecords }) => {
   const classes = useStyles()
   const [recordInfo, setRecordInfo] = useState({})
   const [imageUrl, setImageUrl] = useState('')
+  const [imagePreview, setImagePreview] = useState('')
+
   const { submitting, close, postData, error } = usePostData()
 
   const handleChange = ({ target: { name, value } }) => {
@@ -55,20 +56,13 @@ const AddRecord = ({ open, handleClose, uid, getRecords }) => {
     })
   }
 
-  const handleFile = ({ target: { files } }) => {
-    setImageUrl(URL.createObjectURL(files[0]))
-  }
-
-  const handleSubmit = () => {
-    const storageRef = firebase.storage().ref('images')
-    storageRef.child(`${uid}.jpg`).put(imageUrl)
-
+  const handleSubmit = async () => {
     const formData = {
       ...recordInfo,
       id: uid,
       imageUrl,
     }
-    postData(formData)
+    await postData(formData)
   }
 
   useEffect(() => {
@@ -101,8 +95,12 @@ const AddRecord = ({ open, handleClose, uid, getRecords }) => {
               <AddRecordForm handleChange={handleChange} />
             </Grid>
             <Grid item xs={4} className={classes.rightCol}>
-              <Input type="file" onChange={handleFile} />
-              <img src={imageUrl} alt="" />
+              <ImageUpload
+                uid={uid}
+                handleFile={setImagePreview}
+                handleUrl={setImageUrl}
+              />
+              <img src={imagePreview} alt="" />
               <Box className={classes.buttons}>
                 <Button
                   variant="contained"

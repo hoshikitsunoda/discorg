@@ -16,7 +16,7 @@ const Dashboard = () => {
   useEffect(() => {
     getRecords()
   }, [getRecords])
-  console.log(data)
+
   if (loading) {
     return 'Loading...'
   }

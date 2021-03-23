@@ -25,7 +25,6 @@ const Dashboard = () => {
     <>
       <MainLayout title="dashboard">
         <Switch>
-          {/* {data ? <RecordList recordData={data} /> : 'No record to show'} */}
           <Route
             path="/dashboard"
             exact
@@ -34,7 +33,7 @@ const Dashboard = () => {
           <Route
             path="/dashboard/item/:id"
             exact
-            render={() => <RecordDetail uid={uid} />}
+            render={() => <RecordDetail recordData={data} />}
           />
           <button onClick={toggleValue}>Click</button>
           <AddRecord

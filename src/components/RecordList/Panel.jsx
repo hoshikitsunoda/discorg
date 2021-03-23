@@ -6,6 +6,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,13 +31,23 @@ const useStyles = makeStyles((theme) => ({
   artist: {
     fontSize: 14,
   },
+  panel: {
+    textDecoration: 'none',
+    color: theme.palette.primary.main,
+  },
 }))
 
 const Panel = ({ recordData, uid }) => {
   const classes = useStyles()
-  const { artist, title, releaseYear, label, country, imageUrl } = recordData[
-    uid
-  ]
+  const {
+    artist,
+    title,
+    releaseYear,
+    label,
+    country,
+    imageUrl,
+    id,
+  } = recordData[uid]
 
   const shortenString = (string, maxLength) =>
     string?.length > maxLength
@@ -45,38 +56,45 @@ const Panel = ({ recordData, uid }) => {
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
-        {!!imageUrl ? (
-          <img
-            className={classes.media}
-            src={imageUrl}
-            alt={`${artist} - ${title}`}
-          />
-        ) : (
-          <Skeleton variant="rect" width={345} height={200} />
-        )}
-        <CardContent>
-          <Typography variant="h6" component="h2" className={classes.title}>
-            {shortenString(title, 18)}
-          </Typography>
-          <Typography
-            variant="body1"
-            color="textSecondary"
-            component="p"
-            className={classes.artist}
-          >
-            {shortenString(artist, 25)}
-          </Typography>
-          <div className={classes.textRight}>
-            <Typography variant="body2" component="p">
-              {label}
+      <Link
+        to={{
+          pathname: `/dashboard/item/${id}`,
+        }}
+        className={classes.panel}
+      >
+        <CardActionArea>
+          {!!imageUrl ? (
+            <img
+              className={classes.media}
+              src={imageUrl}
+              alt={`${artist} - ${title}`}
+            />
+          ) : (
+            <Skeleton variant="rect" width={345} height={200} />
+          )}
+          <CardContent>
+            <Typography variant="h6" component="h2" className={classes.title}>
+              {shortenString(title, 18)}
             </Typography>
-            <Typography variant="body2" component="p">
-              {`${releaseYear} / ${country}`}
+            <Typography
+              variant="body1"
+              color="textSecondary"
+              component="p"
+              className={classes.artist}
+            >
+              {shortenString(artist, 25)}
             </Typography>
-          </div>
-        </CardContent>
-      </CardActionArea>
+            <div className={classes.textRight}>
+              <Typography variant="body2" component="p">
+                {label}
+              </Typography>
+              <Typography variant="body2" component="p">
+                {`${releaseYear} / ${country}`}
+              </Typography>
+            </div>
+          </CardContent>
+        </CardActionArea>
+      </Link>
     </Card>
   )
 }

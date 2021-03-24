@@ -70,7 +70,7 @@ const RecordList = ({ recordData, toggleValue }) => {
     default:
       return
   }
-  console.log(sortedDataArray)
+
   return (
     <>
       <Container maxWidth="md" className={classes.root}>
@@ -90,7 +90,7 @@ const RecordList = ({ recordData, toggleValue }) => {
               <Sort setSort={setSort} sort={sort} />
             </Box>
             <Grid container spacing={2}>
-              {dataArray.map((uid) => (
+              {sortedDataArray.map((uid) => (
                 <Grid item xs={12} sm={4} md={3} key={uid}>
                   <Panel recordData={recordData} uid={uid} />
                 </Grid>

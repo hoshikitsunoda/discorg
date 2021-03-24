@@ -5,6 +5,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 import Panel from './Panel'
 import Filter from './Filter'
 import Sort from './Sort'
+import Search from './Search'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,8 +26,22 @@ const RecordList = ({ recordData, toggleValue }) => {
   const classes = useStyles()
   const [activeGenre, setActiveGenre] = useState('Collection')
   const [sort, setSort] = useState('newest')
+  const [searchTerm, setSearchTerm] = useState('')
 
   let dataArray = Object.keys(recordData)
+
+  dataArray = !searchTerm
+    ? dataArray
+    : dataArray.filter((record) => {
+        const items =
+          recordData[record].title
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          recordData[record].artist
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
+        return items
+      })
 
   const filteredDataArray = dataArray.filter(
     (record) => recordData[record].genre === activeGenre
@@ -34,48 +49,49 @@ const RecordList = ({ recordData, toggleValue }) => {
   dataArray =
     activeGenre === 'Collection' ? dataArray.reverse() : filteredDataArray
 
-  let sortedDataArray = []
-
   switch (sort) {
     case 'newest':
-      sortedDataArray = dataArray.sort(
+      dataArray.sort(
         (a, b) => recordData[b].createdAt - recordData[a].createdAt
       )
       break
     case 'oldest':
-      sortedDataArray = dataArray.sort(
+      dataArray.sort(
         (a, b) => recordData[a].createdAt - recordData[b].createdAt
       )
       break
     case 'artist-a-z':
-      sortedDataArray = dataArray.sort((a, b) =>
+      dataArray.sort((a, b) =>
         recordData[a].artist.localeCompare(recordData[b].artist)
       )
       break
     case 'artist-z-a':
-      sortedDataArray = dataArray.sort((a, b) =>
+      dataArray.sort((a, b) =>
         recordData[b].artist.localeCompare(recordData[a].artist)
       )
       break
     case 'title-a-z':
-      sortedDataArray = dataArray.sort((a, b) =>
+      dataArray.sort((a, b) =>
         recordData[a].title.localeCompare(recordData[b].title)
       )
       break
     case 'title-z-a':
-      sortedDataArray = dataArray.sort((a, b) =>
+      dataArray.sort((a, b) =>
         recordData[b].title.localeCompare(recordData[a].title)
       )
       break
     default:
       return
   }
-  console.log(sortedDataArray)
+
   return (
     <>
       <Container maxWidth="md" className={classes.root}>
         {recordData ? (
           <>
+            <Box display="flex" flexDirection="row" alignItems="center">
+              <Search setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
+            </Box>
             <Box
               display="flex"
               flexDirection="row"

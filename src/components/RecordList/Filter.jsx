@@ -3,7 +3,16 @@ import { makeStyles, Chip, Box, Typography } from '@material-ui/core'
 const useStyles = makeStyles((theme) => ({
   root: {},
   button: {
-    marginRight: theme.spacing(3),
+    marginRight: theme.spacing(1.5),
+    '&&:focus': {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.secondary.main,
+    },
+  },
+  active: {
+    marginRight: theme.spacing(1.5),
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
   },
 }))
 
@@ -29,14 +38,18 @@ const Filter = ({ recordData, activeGenre, setActiveGenre }) => {
             key={genre}
             label={genre}
             variant="outlined"
-            className={classes.button}
+            className={`${classes.button} ${
+              genre === activeGenre && classes.active
+            }`}
             onClick={() => setActiveGenre(genre)}
           />
         ))}
         <Chip
           label="All"
           variant="outlined"
-          className={classes.button}
+          className={`${classes.button} ${
+            activeGenre === 'Collection' && classes.active
+          }`}
           onClick={() => setActiveGenre('Collection')}
         />
       </Box>

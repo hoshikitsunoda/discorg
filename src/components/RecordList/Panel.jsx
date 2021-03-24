@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    height: '100%',
     maxWidth: 345,
     boxShadow: 'none',
     border: '1px solid #e4e4e4',

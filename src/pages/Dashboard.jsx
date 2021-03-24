@@ -28,21 +28,22 @@ const Dashboard = () => {
           <Route
             path="/dashboard"
             exact
-            render={() => <RecordList recordData={data} />}
+            render={() => (
+              <RecordList recordData={data} toggleValue={toggleValue} />
+            )}
           />
           <Route
             path="/dashboard/item/:id"
             exact
             render={() => <RecordDetail recordData={data} />}
           />
-          <button onClick={toggleValue}>Click</button>
-          <AddRecord
-            open={value}
-            handleClose={toggleValue}
-            uid={uid}
-            getRecords={getRecords}
-          />
         </Switch>
+        <AddRecord
+          open={value}
+          handleClose={toggleValue}
+          uid={uid}
+          getRecords={getRecords}
+        />
       </MainLayout>
     </>
   )

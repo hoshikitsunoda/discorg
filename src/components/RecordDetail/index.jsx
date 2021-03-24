@@ -11,7 +11,7 @@ import {
 import { useParams } from 'react-router-dom'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 
-import { GoBackButton } from '../shared/Button'
+import { LinkButton } from '../shared/Button'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,12 +46,12 @@ const RecordDetail = ({ recordData }) => {
 
   return (
     <Box pt={4}>
-      <GoBackButton pathName="/dashboard">
+      <LinkButton pathName="/dashboard">
         <ArrowBackIcon fontSize="small" style={{ marginRight: 8 }} />
         <Typography variant="subtitle1" component="p">
           Back to list
         </Typography>
-      </GoBackButton>
+      </LinkButton>
       <Box
         display="flex"
         flexDirection="row"

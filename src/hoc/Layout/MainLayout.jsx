@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'column',
-    height: '100vh',
     padding: 0,
+    paddingBottom: 128,
   },
 }))
 

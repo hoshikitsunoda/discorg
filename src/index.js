@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
-import { createMuiTheme, ThemeProvider } from '@material-ui/core'
+import { createMuiTheme, ThemeProvider, CssBaseline } from '@material-ui/core'
 import 'react-toastify/dist/ReactToastify.css'
 
 import './index.css'
@@ -35,6 +35,7 @@ ReactDOM.render(
   <Router>
     <ToastContainer />
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <App />
     </ThemeProvider>
   </Router>,

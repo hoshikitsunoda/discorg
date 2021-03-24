@@ -65,6 +65,7 @@ const AddRecord = ({ open, handleClose, uid, getRecords }) => {
       ...recordInfo,
       id: uid,
       imageUrl,
+      createdAt: Date.now(),
     }
     await postData(formData)
   }

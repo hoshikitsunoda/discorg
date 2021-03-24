@@ -23,9 +23,8 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 5,
     paddingBottom: '100%',
   },
-  textRight: {
-    textAlign: 'right',
-    marginTop: theme.spacing(3),
+  bottomText: {
+    marginTop: theme.spacing(1),
     '& > p': {
       fontSize: 12,
     },
@@ -40,8 +39,15 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     color: theme.palette.primary.main,
   },
+  cardActionArea: {
+    height: '100%',
+  },
   cardContent: {
     padding: 8,
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
 }))
 
@@ -90,7 +96,7 @@ const Panel = ({ recordData, uid }) => {
         }}
         className={classes.panel}
       >
-        <CardActionArea>
+        <CardActionArea className={classes.cardActionArea}>
           <CardContent className={classes.cardContent}>
             <Box p={1}>
               {icon && (
@@ -99,7 +105,7 @@ const Panel = ({ recordData, uid }) => {
                 </Box>
               )}
               <Typography variant="h6" component="h2" className={classes.title}>
-                {shortenString(title, 18)}
+                {shortenString(title, 30)}
               </Typography>
               <Typography
                 variant="body1"
@@ -109,10 +115,17 @@ const Panel = ({ recordData, uid }) => {
               >
                 {shortenString(artist, 25)}
               </Typography>
+            </Box>
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-between"
+            >
               <Box
                 display="flex"
                 justifyContent="space-between"
-                className={classes.textRight}
+                className={classes.bottomText}
+                p={1}
               >
                 <Typography variant="body2" component="p">
                   {label}
@@ -121,21 +134,21 @@ const Panel = ({ recordData, uid }) => {
                   {`${releaseYear} / ${country}`}
                 </Typography>
               </Box>
+              {!!imageUrl ? (
+                <div
+                  className={classes.media}
+                  title={`${artist} - ${title}`}
+                  style={{
+                    backgroundImage: `url(${imageUrl})`,
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center center',
+                  }}
+                />
+              ) : (
+                <Skeleton variant="rect" width={345} height={200} />
+              )}
             </Box>
-            {!!imageUrl ? (
-              <div
-                className={classes.media}
-                title={`${artist} - ${title}`}
-                style={{
-                  backgroundImage: `url(${imageUrl})`,
-                  backgroundSize: 'cover',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'center center',
-                }}
-              />
-            ) : (
-              <Skeleton variant="rect" width={345} height={200} />
-            )}
           </CardContent>
         </CardActionArea>
       </Link>

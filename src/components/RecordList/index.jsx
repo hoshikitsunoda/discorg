@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     position: 'fixed',
-    bottom: 50,
+    bottom: 30,
     right: 100,
   },
   icon: {

@@ -6,6 +6,8 @@ import Panel from './Panel'
 import Filter from './Filter'
 import Sort from './Sort'
 import Search from './Search'
+import List from './List'
+import ViewSwitch from '../shared/ViewSwitch'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +29,7 @@ const RecordList = ({ recordData, toggleValue }) => {
   const [activeGenre, setActiveGenre] = useState('Collection')
   const [sort, setSort] = useState('newest')
   const [searchTerm, setSearchTerm] = useState('')
+  const [viewOption, setViewOption] = useState('panel')
 
   let dataArray = Object.keys(recordData)
 
@@ -89,8 +92,17 @@ const RecordList = ({ recordData, toggleValue }) => {
       <Container maxWidth="md" className={classes.root}>
         {recordData ? (
           <>
-            <Box display="flex" flexDirection="row" alignItems="center">
+            <Box
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+              justifyContent="space-between"
+            >
               <Search setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
+              <ViewSwitch
+                setViewOption={setViewOption}
+                viewOption={viewOption}
+              />
             </Box>
             <Box
               display="flex"
@@ -106,11 +118,17 @@ const RecordList = ({ recordData, toggleValue }) => {
               <Sort setSort={setSort} sort={sort} />
             </Box>
             <Grid container spacing={2}>
-              {dataArray.map((uid) => (
-                <Grid item xs={12} sm={4} md={3} key={uid}>
-                  <Panel recordData={recordData} uid={uid} />
-                </Grid>
-              ))}
+              {dataArray.map((uid) => {
+                return viewOption === 'panel' ? (
+                  <Grid item xs={12} sm={4} md={3} key={uid}>
+                    <Panel recordData={recordData} uid={uid} />
+                  </Grid>
+                ) : (
+                  <Grid item xs={12} key={uid}>
+                    <List recordData={recordData} uid={uid} />
+                  </Grid>
+                )
+              })}
             </Grid>
           </>
         ) : (

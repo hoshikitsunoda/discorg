@@ -4,6 +4,8 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   button: {
     marginRight: theme.spacing(1),
+    backgroundColor: '#eee',
+    border: '1px solid #e4e4e4',
     '&&:focus': {
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.secondary.main,

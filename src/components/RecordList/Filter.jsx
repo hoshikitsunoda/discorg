@@ -30,7 +30,7 @@ const Filter = ({ recordData, activeGenre, setActiveGenre }) => {
   return (
     <Box display="flex" flexDirection="row" alignItems="center" py={4}>
       <Box mr={2}>
-        <Typography variant="h4" component="h2">
+        <Typography variant="h4" component="h2" style={{ fontWeight: 600 }}>
           {activeGenre}
         </Typography>
       </Box>

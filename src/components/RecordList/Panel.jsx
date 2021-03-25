@@ -100,7 +100,7 @@ const Panel = ({ recordData, uid }) => {
           <CardContent className={classes.cardContent}>
             <Box p={1}>
               {icon && (
-                <Box width={20} mb={2}>
+                <Box width={20} mb={1}>
                   <img src={icon} alt="" style={{ width: '100%' }} />
                 </Box>
               )}

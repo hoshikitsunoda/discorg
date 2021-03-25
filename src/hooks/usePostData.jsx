@@ -22,7 +22,21 @@ const usePostData = () => {
     }
   }, [])
 
-  return { submitting, close, postData, error }
+  const deleteData = useCallback(async (id) => {
+    setSubmitting(true)
+    try {
+      await axios.delete(`/records/${id}.json`)
+      toast.success('Successfully deleted!')
+      setSubmitting(false)
+      setClose(true)
+    } catch (err) {
+      toast.error(err.message)
+      setSubmitting(false)
+      setError(err.message)
+    }
+  }, [])
+
+  return { submitting, close, postData, error, deleteData }
 }
 
 export default usePostData

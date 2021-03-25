@@ -8,6 +8,7 @@ import Sort from './Sort'
 import Search from './Search'
 import List from './List'
 import ViewSwitch from '../shared/ViewSwitch'
+import { usePostData, useImage } from '../../hooks'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,11 +25,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const RecordList = ({ recordData, toggleValue, setViewOption, viewOption }) => {
+const RecordList = ({
+  recordData,
+  toggleValue,
+  setViewOption,
+  viewOption,
+  getRecords,
+}) => {
   const classes = useStyles()
   const [activeGenre, setActiveGenre] = useState('Collection')
   const [sort, setSort] = useState('newest')
   const [searchTerm, setSearchTerm] = useState('')
+  const { deleteData } = usePostData()
+  const { deleteImage } = useImage()
 
   let dataArray = Object.keys(recordData)
 
@@ -86,6 +95,14 @@ const RecordList = ({ recordData, toggleValue, setViewOption, viewOption }) => {
       return
   }
 
+  const handleDelete = async (event, itemId, imageId) => {
+    event.stopPropagation()
+    event.preventDefault()
+    await deleteData(itemId)
+    await deleteImage(imageId)
+    getRecords()
+  }
+
   return (
     <>
       <Container maxWidth="md" className={classes.root}>
@@ -120,11 +137,19 @@ const RecordList = ({ recordData, toggleValue, setViewOption, viewOption }) => {
               {dataArray.map((uid) => {
                 return viewOption === 'panel' ? (
                   <Grid item xs={12} sm={4} md={3} key={uid}>
-                    <Panel recordData={recordData} uid={uid} />
+                    <Panel
+                      recordData={recordData}
+                      uid={uid}
+                      handleDelete={handleDelete}
+                    />
                   </Grid>
                 ) : (
                   <Grid item xs={12} key={uid}>
-                    <List recordData={recordData} uid={uid} />
+                    <List
+                      recordData={recordData}
+                      uid={uid}
+                      handleDelete={handleDelete}
+                    />
                   </Grid>
                 )
               })}

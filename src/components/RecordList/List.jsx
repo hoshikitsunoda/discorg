@@ -9,8 +9,9 @@ import {
 } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
 import { Link } from 'react-router-dom'
-import CassetteIcon from '../../images/icons/cassette.png'
-import RecordIcon from '../../images/icons/record.png'
+
+import CloseIcon from '../../images/icons/close-icon.svg'
+import { shortenString, mediaIcon } from '../../utils/helper'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,8 +54,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const List = ({ recordData, uid }) => {
+const List = ({ recordData, uid, handleDelete }) => {
   const classes = useStyles()
+
   const {
     artist,
     title,
@@ -66,29 +68,7 @@ const List = ({ recordData, uid }) => {
     id,
   } = recordData[uid]
 
-  const shortenString = (string, maxLength) =>
-    string?.length > maxLength
-      ? string?.substring(0, maxLength) + '...'
-      : string
-
-  let icon
-
-  switch (format) {
-    case 'LP':
-      icon = RecordIcon
-      break
-    case '2 x LP':
-      icon = RecordIcon
-      break
-    case '3 x LP':
-      icon = RecordIcon
-      break
-    case 'Cassette':
-      icon = CassetteIcon
-      break
-    default:
-      icon = ''
-  }
+  const icon = mediaIcon(format)
 
   return (
     <Card className={classes.root}>
@@ -143,8 +123,12 @@ const List = ({ recordData, uid }) => {
                   {label}
                 </Typography>
               </Grid>
-              <Grid item xs={2} className={classes.flex}>
-                <Typography variant="body2" component="p">
+              <Grid item xs={1} className={classes.flex}>
+                <Typography
+                  variant="body2"
+                  component="p"
+                  style={{ fontSize: 10 }}
+                >
                   {`${releaseYear} / ${country}`}
                 </Typography>
               </Grid>
@@ -159,6 +143,21 @@ const List = ({ recordData, uid }) => {
                     <img src={icon} alt="" style={{ width: '100%' }} />
                   </Box>
                 )}
+              </Grid>
+              <Grid
+                item
+                xs={1}
+                className={classes.flex}
+                style={{ justifyContent: 'center' }}
+              >
+                <Box width={20}>
+                  <img
+                    src={CloseIcon}
+                    alt="delete item"
+                    style={{ width: 20 }}
+                    onClick={(event) => handleDelete(event, uid, id)}
+                  />
+                </Box>
               </Grid>
             </Grid>
           </CardContent>

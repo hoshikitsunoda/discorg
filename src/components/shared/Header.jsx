@@ -12,7 +12,7 @@ import {
 import AccountCircle from '@material-ui/icons/AccountCircle'
 
 import { useGetUser, useAuth } from '../../hooks'
-import { randomColor } from '../../utils/randomColor'
+import { randomColor } from '../../utils/helper'
 import Logo from '../../images/discorg.png'
 
 const useStyles = makeStyles((theme) => ({

@@ -35,6 +35,7 @@ const Dashboard = () => {
                 toggleValue={toggleValue}
                 setViewOption={setViewOption}
                 viewOption={viewOption}
+                getRecords={getRecords}
               />
             )}
           />

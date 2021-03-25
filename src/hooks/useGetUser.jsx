@@ -7,10 +7,10 @@ const useGetUser = () => {
   const [data, setData] = useState({})
   const [loading, setLoading] = useState(false)
 
-  const getUser = useCallback(async () => {
+  const getUser = useCallback(() => {
     setLoading(true)
     try {
-      await auth().onAuthStateChanged((user) => {
+      auth().onAuthStateChanged((user) => {
         if (user) {
           setData(user)
         }

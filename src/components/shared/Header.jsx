@@ -6,10 +6,12 @@ import {
   IconButton,
   makeStyles,
   Box,
+  Menu,
+  MenuItem,
 } from '@material-ui/core'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 
-import useGetUser from '../../hooks/useGetUser'
+import { useGetUser, useAuth } from '../../hooks'
 import { randomColor } from '../../utils/randomColor'
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +40,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
   const { data, getUser } = useGetUser()
+  const { signOut } = useAuth()
   const [borderColor, setBorderColor] = useState('#F7B32B')
+  const [anchorEl, setAnchorEl] = useState(null)
   const classes = useStyles({ borderColor })
 
   useEffect(() => {
@@ -57,6 +61,15 @@ const Header = () => {
     }
   }, [getUser, borderColor])
 
+  const handleClick = ({ currentTarget }) => {
+    setAnchorEl(currentTarget)
+  }
+
+  const handleClose = () => {
+    signOut()
+    setAnchorEl(null)
+  }
+
   const { email, uid } = data
 
   return (
@@ -70,11 +83,21 @@ const Header = () => {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 color="primary"
+                onClick={handleClick}
               >
                 <AccountCircle />
               </IconButton>
             </div>
             <Typography variant="body1">{email}</Typography>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Log Out</MenuItem>
+            </Menu>
           </>
         )}
       </Toolbar>

@@ -1,7 +1,8 @@
 import { Helmet } from 'react-helmet'
-import { Container, makeStyles } from '@material-ui/core'
+import { Container, makeStyles, Box } from '@material-ui/core'
 
 import Header from '../../components/shared/Header'
+import Logo from '../../images/discorg.png'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,7 +12,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
     padding: 0,
-    paddingBottom: 128,
+  },
+  logo: {
+    width: 100,
   },
 }))
 
@@ -31,6 +34,15 @@ const MainLayout = ({ title, children }) => {
       <Container maxWidth={false} className={classes.root}>
         <Header />
         <Container component="main">{children}</Container>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          width={1}
+          style={{ padding: '100px 0 40px' }}
+        >
+          <img src={Logo} alt="discorg logo" className={classes.logo} />
+        </Box>
       </Container>
     </>
   )

@@ -12,7 +12,8 @@ import {
 import AccountCircle from '@material-ui/icons/AccountCircle'
 
 import { useGetUser, useAuth } from '../../hooks'
-import { randomColor } from '../../utils/randomColor'
+import { randomColor } from '../../utils/helper'
+import Logo from '../../images/discorg.png'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
       content: '""',
       display: 'block',
     },
+  },
+  logo: {
+    width: 120,
   },
 }))
 
@@ -76,18 +80,30 @@ const Header = () => {
       <Toolbar>
         {uid && (
           <>
-            <div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                color="primary"
-                onClick={handleClick}
-              >
-                <AccountCircle />
-              </IconButton>
-            </div>
-            <Typography variant="body1">{email}</Typography>
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-between"
+              width={1}
+            >
+              <Box display="flex" alignItems="center">
+                <div>
+                  <IconButton
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    color="primary"
+                    onClick={handleClick}
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                </div>
+                <Typography variant="body1">{email}</Typography>
+              </Box>
+              <Box display="flex" alignItems="center" p={2}>
+                <img src={Logo} alt="discorg logo" className={classes.logo} />
+              </Box>
+            </Box>
             <Menu
               id="simple-menu"
               anchorEl={anchorEl}

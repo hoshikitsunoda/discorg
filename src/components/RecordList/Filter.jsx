@@ -4,6 +4,8 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   button: {
     marginRight: theme.spacing(1),
+    backgroundColor: '#eee',
+    border: '1px solid #e4e4e4',
     '&&:focus': {
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.secondary.main,
@@ -28,7 +30,7 @@ const Filter = ({ recordData, activeGenre, setActiveGenre }) => {
   return (
     <Box display="flex" flexDirection="row" alignItems="center" py={4}>
       <Box mr={2}>
-        <Typography variant="h4" component="h2">
+        <Typography variant="h4" component="h2" style={{ fontWeight: 600 }}>
           {activeGenre}
         </Typography>
       </Box>

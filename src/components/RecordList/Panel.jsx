@@ -8,8 +8,9 @@ import {
 } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
 import { Link } from 'react-router-dom'
-import CassetteIcon from '../../images/icons/cassette.png'
-import RecordIcon from '../../images/icons/record.png'
+
+import CloseIcon from '../../images/icons/close-icon.svg'
+import { shortenString, mediaIcon } from '../../utils/helper'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,8 +52,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Panel = ({ recordData, uid }) => {
+const Panel = ({ recordData, uid, handleDelete }) => {
   const classes = useStyles()
+
   const {
     artist,
     title,
@@ -64,29 +66,7 @@ const Panel = ({ recordData, uid }) => {
     id,
   } = recordData[uid]
 
-  const shortenString = (string, maxLength) =>
-    string?.length > maxLength
-      ? string?.substring(0, maxLength) + '...'
-      : string
-
-  let icon
-
-  switch (format) {
-    case 'LP':
-      icon = RecordIcon
-      break
-    case '2 x LP':
-      icon = RecordIcon
-      break
-    case '3 x LP':
-      icon = RecordIcon
-      break
-    case 'Cassette':
-      icon = CassetteIcon
-      break
-    default:
-      icon = ''
-  }
+  const icon = mediaIcon(format)
 
   return (
     <Card className={classes.root}>
@@ -100,7 +80,7 @@ const Panel = ({ recordData, uid }) => {
           <CardContent className={classes.cardContent}>
             <Box p={1}>
               {icon && (
-                <Box width={20} mb={2}>
+                <Box width={20} mb={1}>
                   <img src={icon} alt="" style={{ width: '100%' }} />
                 </Box>
               )}
@@ -116,38 +96,54 @@ const Panel = ({ recordData, uid }) => {
                 {shortenString(artist, 25)}
               </Typography>
             </Box>
-            <Box
-              display="flex"
-              flexDirection="column"
-              justifyContent="space-between"
-            >
+            <Box>
               <Box
                 display="flex"
+                flexDirection="column"
                 justifyContent="space-between"
-                className={classes.bottomText}
-                p={1}
               >
-                <Typography variant="body2" component="p">
-                  {label}
-                </Typography>
-                <Typography variant="body2" component="p">
-                  {`${releaseYear} / ${country}`}
-                </Typography>
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  className={classes.bottomText}
+                  p={1}
+                >
+                  <Typography variant="body2" component="p">
+                    {label}
+                  </Typography>
+                  <Typography variant="body2" component="p">
+                    {`${releaseYear} / ${country}`}
+                  </Typography>
+                </Box>
+                {!!imageUrl ? (
+                  <div
+                    className={classes.media}
+                    title={`${artist} - ${title}`}
+                    style={{
+                      backgroundImage: `url(${imageUrl})`,
+                      backgroundSize: 'cover',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'center center',
+                    }}
+                  />
+                ) : (
+                  <Skeleton variant="rect" width={345} height={200} />
+                )}
               </Box>
-              {!!imageUrl ? (
-                <div
-                  className={classes.media}
-                  title={`${artist} - ${title}`}
-                  style={{
-                    backgroundImage: `url(${imageUrl})`,
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'center center',
-                  }}
+              <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="center"
+                p={1}
+                mt={1}
+              >
+                <img
+                  src={CloseIcon}
+                  alt="delete item"
+                  style={{ width: 30 }}
+                  onClick={(event) => handleDelete(event, uid, id)}
                 />
-              ) : (
-                <Skeleton variant="rect" width={345} height={200} />
-              )}
+              </Box>
             </Box>
           </CardContent>
         </CardActionArea>

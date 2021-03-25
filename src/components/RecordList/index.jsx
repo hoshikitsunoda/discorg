@@ -24,12 +24,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const RecordList = ({ recordData, toggleValue }) => {
+const RecordList = ({ recordData, toggleValue, setViewOption, viewOption }) => {
   const classes = useStyles()
   const [activeGenre, setActiveGenre] = useState('Collection')
   const [sort, setSort] = useState('newest')
   const [searchTerm, setSearchTerm] = useState('')
-  const [viewOption, setViewOption] = useState('panel')
 
   let dataArray = Object.keys(recordData)
 

@@ -66,7 +66,6 @@ const Header = () => {
   }
 
   const handleClose = () => {
-    signOut()
     setAnchorEl(null)
   }
 
@@ -96,7 +95,7 @@ const Header = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Log Out</MenuItem>
+              <MenuItem onClick={signOut}>Log Out</MenuItem>
             </Menu>
           </>
         )}

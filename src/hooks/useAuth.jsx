@@ -32,7 +32,16 @@ const useAuth = () => {
     }
   }
 
-  return { signUp, signIn, data, handleChange }
+  const signOut = async () => {
+    try {
+      await auth().signOut()
+      history.push('/signin')
+    } catch (err) {
+      toast.error(err.message)
+    }
+  }
+
+  return { signUp, signIn, data, handleChange, signOut }
 }
 
 export default useAuth

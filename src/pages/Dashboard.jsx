@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { Route, Switch } from 'react-router-dom'
 
@@ -11,6 +11,7 @@ import RecordDetail from '../components/RecordDetail'
 const Dashboard = () => {
   const { data, loading, getRecords } = useGetRecords()
   const { value, toggleValue } = useToggle()
+  const [viewOption, setViewOption] = useState('panel')
   const uid = uuidv4()
 
   useEffect(() => {
@@ -29,7 +30,12 @@ const Dashboard = () => {
             path="/dashboard"
             exact
             render={() => (
-              <RecordList recordData={data} toggleValue={toggleValue} />
+              <RecordList
+                recordData={data}
+                toggleValue={toggleValue}
+                setViewOption={setViewOption}
+                viewOption={viewOption}
+              />
             )}
           />
           <Route

@@ -16,6 +16,7 @@ import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined'
 
 import { LinkButton } from '../shared/Button'
 import Edit from './Edit'
+import ConfirmModal from './ConfirmModal'
 import { useToggle } from '../../hooks'
 
 const useStyles = makeStyles((theme) => ({
@@ -29,6 +30,8 @@ const RecordDetail = ({ recordData, getRecords }) => {
   const { id: itemId } = useParams()
   const { value: edit, toggleValue } = useToggle(false)
   const [recordInfo, setRecordInfo] = useState({})
+  const [touched, setTouched] = useState({})
+  const [open, setOpen] = useState(false)
 
   const singleRecord = Object.keys(recordData).filter(
     (record) => recordData[record].id === itemId
@@ -56,6 +59,18 @@ const RecordDetail = ({ recordData, getRecords }) => {
     title = '',
   } = recordInfo || {}
 
+  const handleClick = () => {
+    let isTouched = false
+    for (let o in touched) {
+      if (touched[o]) isTouched = true
+    }
+    if (!isTouched) {
+      toggleValue()
+    } else {
+      setOpen(true)
+    }
+  }
+  console.log(open)
   return (
     <Box pt={4}>
       <Box display="flex" flexDirection="row" justifyContent="space-between">
@@ -67,9 +82,17 @@ const RecordDetail = ({ recordData, getRecords }) => {
         </LinkButton>
         <Box p={1}>
           {edit ? (
-            <CloseIcon onClick={toggleValue} fontSize="large" />
+            <CloseIcon
+              onClick={handleClick}
+              fontSize="large"
+              style={{ cursor: 'pointer' }}
+            />
           ) : (
-            <CreateOutlinedIcon onClick={toggleValue} fontSize="large" />
+            <CreateOutlinedIcon
+              onClick={toggleValue}
+              fontSize="large"
+              style={{ cursor: 'pointer' }}
+            />
           )}
         </Box>
       </Box>
@@ -94,6 +117,8 @@ const RecordDetail = ({ recordData, getRecords }) => {
               recordToUpdate={singleRecord}
               exitEdit={toggleValue}
               getRecords={getRecords}
+              setTouched={setTouched}
+              touched={touched}
             />
           ) : (
             <>
@@ -171,6 +196,9 @@ const RecordDetail = ({ recordData, getRecords }) => {
           )}
         </Box>
       </Box>
+      {open && (
+        <ConfirmModal toggleValue={toggleValue} setOpen={setOpen} open={open} />
+      )}
     </Box>
   )
 }

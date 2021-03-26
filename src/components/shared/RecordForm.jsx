@@ -20,9 +20,11 @@ const RecordForm = ({ handleChange, recordData, heading }) => {
   return (
     <>
       {heading && (
-        <Typography variant="h4" component="h4">
-          {heading}
-        </Typography>
+        <Box mb={2}>
+          <Typography variant="h4" component="h4">
+            {heading}
+          </Typography>
+        </Box>
       )}
       <Box display="flex" flexDirection="row" justifyContent="space-between">
         <TextField

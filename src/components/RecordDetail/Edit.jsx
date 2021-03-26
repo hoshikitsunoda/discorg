@@ -25,7 +25,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Edit = ({ recordData, recordToUpdate, exitEdit, getRecords }) => {
+const Edit = ({
+  recordData,
+  recordToUpdate,
+  exitEdit,
+  getRecords,
+  setTouched,
+  touched,
+}) => {
   const classes = useStyles()
   const [input, setInput] = useState({})
   const { editData, submitting } = usePostData()
@@ -34,6 +41,10 @@ const Edit = ({ recordData, recordToUpdate, exitEdit, getRecords }) => {
     setInput({
       ...input,
       [name]: value,
+    })
+    setTouched({
+      ...touched,
+      [name]: recordData[name] === value ? false : true,
     })
   }
 

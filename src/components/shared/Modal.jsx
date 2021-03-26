@@ -8,7 +8,6 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     position: 'absolute',
-    width: 800,
     backgroundColor: theme.palette.background.paper,
     borderRadius: 5,
     boxShadow: theme.shadows[4],
@@ -17,10 +16,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const CustomModal = ({ open, handleClose, children }) => {
+const CustomModal = ({ open, handleClose, children, ...props }) => {
   const classes = useStyles()
   return (
-    <Modal open={open} onClose={handleClose} className={classes.modal}>
+    <Modal
+      open={open}
+      onClose={handleClose}
+      className={classes.modal}
+      {...props}
+    >
       <main className={classes.paper}>{children}</main>
     </Modal>
   )

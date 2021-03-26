@@ -79,7 +79,7 @@ const AddRecord = ({ open, handleClose, uid, getRecords }) => {
   }, [handleClose, close, getRecords])
 
   return (
-    <CustomModal open={open} handleClose={handleClose}>
+    <CustomModal open={open} handleClose={handleClose} style={{ width: 800 }}>
       <Box
         display="flex"
         flexDirection="row"

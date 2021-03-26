@@ -7,6 +7,7 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Button,
   makeStyles,
 } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
@@ -16,7 +17,7 @@ import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined'
 
 import { LinkButton } from '../shared/Button'
 import Edit from './Edit'
-import ConfirmModal from './ConfirmModal'
+import { ConfirmModal } from '../shared/Modal'
 import { useToggle } from '../../hooks'
 
 const useStyles = makeStyles((theme) => ({
@@ -70,7 +71,12 @@ const RecordDetail = ({ recordData, getRecords }) => {
       setOpen(true)
     }
   }
-  console.log(open)
+
+  const handleClose = () => {
+    toggleValue()
+    setOpen(false)
+  }
+
   return (
     <Box pt={4}>
       <Box display="flex" flexDirection="row" justifyContent="space-between">
@@ -197,7 +203,33 @@ const RecordDetail = ({ recordData, getRecords }) => {
         </Box>
       </Box>
       {open && (
-        <ConfirmModal toggleValue={toggleValue} setOpen={setOpen} open={open} />
+        <ConfirmModal
+          setOpen={setOpen}
+          open={open}
+          handleClose={handleClose}
+          title="Are you sure you want to exit edit mode?"
+          subtitle="Some fields are edited."
+        >
+          <Box
+            p={2}
+            pb={0}
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            width={1}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setOpen(false)}
+            >
+              Stay
+            </Button>
+            <Button variant="contained" color="secondary" onClick={handleClose}>
+              Exit
+            </Button>
+          </Box>
+        </ConfirmModal>
       )}
     </Box>
   )

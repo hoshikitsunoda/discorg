@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 
-import CustomModal from '../shared/Modal'
+import { CustomModal } from '../shared/Modal'
 import RecordForm from '../shared/RecordForm'
 import ImageUpload from './ImageUpload'
 import { usePostData } from '../../hooks'

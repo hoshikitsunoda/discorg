@@ -1,4 +1,4 @@
-import { makeStyles, Modal } from '@material-ui/core'
+import { makeStyles, Modal, Box, Typography } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const CustomModal = ({ open, handleClose, children, ...props }) => {
+export const CustomModal = ({ open, handleClose, children, ...props }) => {
   const classes = useStyles()
   return (
     <Modal
@@ -30,4 +30,20 @@ const CustomModal = ({ open, handleClose, children, ...props }) => {
   )
 }
 
-export default CustomModal
+export const ConfirmModal = ({ open, title, subtitle, children }) => {
+  return (
+    <CustomModal open={open}>
+      <Box p={3} display="flex" flexDirection="column" alignItems="center">
+        <Typography variant="h5" component="h5">
+          {title}
+        </Typography>
+        <Box py={2}>
+          <Typography variant="body1" component="p">
+            {subtitle}
+          </Typography>
+        </Box>
+        {children}
+      </Box>
+    </CustomModal>
+  )
+}

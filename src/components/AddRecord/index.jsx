@@ -11,7 +11,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close'
 
 import CustomModal from '../shared/Modal'
-import AddRecordForm from './AddRecordForm'
+import RecordForm from '../shared/RecordForm'
 import ImageUpload from './ImageUpload'
 import { usePostData } from '../../hooks'
 import ImagePreview from '../AddRecord/ImagePreview'
@@ -97,7 +97,7 @@ const AddRecord = ({ open, handleClose, uid, getRecords }) => {
         ) : (
           <>
             <Grid item xs={8}>
-              <AddRecordForm handleChange={handleChange} />
+              <RecordForm handleChange={handleChange} />
             </Grid>
             <Grid item xs={4} className={classes.rightCol}>
               <ImageUpload

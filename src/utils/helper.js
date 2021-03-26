@@ -35,3 +35,14 @@ export const mediaIcon = (format) => {
 
   return icon
 }
+
+export const flatten = (json, id, newObj) => {
+  Object.keys(json).forEach((key) => {
+    const path = `/records/${id}/${key}`
+    if (typeof json[key] === 'object') {
+      flatten(json[key], path)
+    } else {
+      newObj[path] = json[key]
+    }
+  })
+}

@@ -42,7 +42,9 @@ const Dashboard = () => {
           <Route
             path="/dashboard/item/:id"
             exact
-            render={() => <RecordDetail recordData={data} />}
+            render={() => (
+              <RecordDetail recordData={data} getRecords={getRecords} />
+            )}
           />
         </Switch>
         <AddRecord

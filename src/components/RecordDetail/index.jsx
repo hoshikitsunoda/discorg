@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import {
   Typography,
   Box,
@@ -23,15 +24,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const RecordDetail = ({ recordData }) => {
+const RecordDetail = ({ recordData, getRecords }) => {
   const classes = useStyles()
   const { id: itemId } = useParams()
   const { value: edit, toggleValue } = useToggle(false)
+  const [recordInfo, setRecordInfo] = useState({})
 
   const singleRecord = Object.keys(recordData).filter(
     (record) => recordData[record].id === itemId
   )
   const itemToDisplay = recordData[singleRecord]
+
+  useEffect(() => {
+    setRecordInfo(recordData[singleRecord])
+  }, [recordData, singleRecord])
 
   const {
     artist = '',
@@ -48,7 +54,7 @@ const RecordDetail = ({ recordData }) => {
     releaseYear = '',
     style = '',
     title = '',
-  } = itemToDisplay || {}
+  } = recordInfo || {}
 
   return (
     <Box pt={4}>
@@ -83,7 +89,12 @@ const RecordDetail = ({ recordData }) => {
         </Box>
         <Box width={1} p={4} className={classes.detail}>
           {edit ? (
-            <Edit recordData={itemToDisplay} />
+            <Edit
+              recordData={itemToDisplay}
+              recordToUpdate={singleRecord}
+              exitEdit={toggleValue}
+              getRecords={getRecords}
+            />
           ) : (
             <>
               <Typography variant="h3" component="h3">

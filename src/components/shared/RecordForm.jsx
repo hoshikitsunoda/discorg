@@ -1,8 +1,31 @@
-import { TextField, Box } from '@material-ui/core'
+import { TextField, Box, Typography } from '@material-ui/core'
 
-const AddRecordForm = ({ handleChange }) => {
+const RecordForm = ({ handleChange, recordData, heading }) => {
+  const {
+    artist = '',
+    catalogNumber = '',
+    country = '',
+    coverCondition = '',
+    format = '',
+    genre = '',
+    label = '',
+    location = '',
+    mediaCondition = '',
+    note = '',
+    releaseYear = '',
+    style = '',
+    title = '',
+  } = recordData || {}
+
   return (
     <>
+      {heading && (
+        <Box mb={2}>
+          <Typography variant="h4" component="h4">
+            {heading}
+          </Typography>
+        </Box>
+      )}
       <Box display="flex" flexDirection="row" justifyContent="space-between">
         <TextField
           label="Artist"
@@ -10,6 +33,7 @@ const AddRecordForm = ({ handleChange }) => {
           variant="filled"
           fullWidth
           onChange={handleChange}
+          defaultValue={artist}
         />
         <TextField
           label="Title"
@@ -17,6 +41,7 @@ const AddRecordForm = ({ handleChange }) => {
           variant="filled"
           fullWidth
           onChange={handleChange}
+          defaultValue={title}
         />
       </Box>
       <Box display="flex" flexDirection="row" justifyContent="space-between">
@@ -26,6 +51,7 @@ const AddRecordForm = ({ handleChange }) => {
           variant="filled"
           fullWidth
           onChange={handleChange}
+          defaultValue={label}
         />
         <TextField
           label="Cat#"
@@ -33,6 +59,7 @@ const AddRecordForm = ({ handleChange }) => {
           variant="filled"
           fullWidth
           onChange={handleChange}
+          defaultValue={catalogNumber}
         />
       </Box>
       <Box display="flex" flexDirection="row" justifyContent="space-between">
@@ -42,6 +69,7 @@ const AddRecordForm = ({ handleChange }) => {
           variant="filled"
           fullWidth
           onChange={handleChange}
+          defaultValue={format}
         />
         <TextField
           label="Country"
@@ -49,6 +77,7 @@ const AddRecordForm = ({ handleChange }) => {
           variant="filled"
           fullWidth
           onChange={handleChange}
+          defaultValue={country}
         />
       </Box>
       <Box display="flex" flexDirection="row" justifyContent="space-between">
@@ -58,6 +87,7 @@ const AddRecordForm = ({ handleChange }) => {
           variant="filled"
           fullWidth
           onChange={handleChange}
+          defaultValue={releaseYear}
         />
         <TextField
           label="Genre"
@@ -65,6 +95,7 @@ const AddRecordForm = ({ handleChange }) => {
           variant="filled"
           fullWidth
           onChange={handleChange}
+          defaultValue={genre}
         />
       </Box>
       <Box display="flex" flexDirection="row" justifyContent="space-between">
@@ -74,6 +105,7 @@ const AddRecordForm = ({ handleChange }) => {
           variant="filled"
           fullWidth
           onChange={handleChange}
+          defaultValue={style}
         />
         <TextField
           label="Location"
@@ -81,6 +113,7 @@ const AddRecordForm = ({ handleChange }) => {
           variant="filled"
           fullWidth
           onChange={handleChange}
+          defaultValue={location}
         />
       </Box>
 
@@ -91,6 +124,7 @@ const AddRecordForm = ({ handleChange }) => {
           variant="filled"
           fullWidth
           onChange={handleChange}
+          defaultValue={mediaCondition}
         />
         <TextField
           label="Cover condition"
@@ -98,6 +132,7 @@ const AddRecordForm = ({ handleChange }) => {
           variant="filled"
           fullWidth
           onChange={handleChange}
+          defaultValue={coverCondition}
         />
       </Box>
       <TextField
@@ -108,9 +143,10 @@ const AddRecordForm = ({ handleChange }) => {
         rows={4}
         fullWidth
         onChange={handleChange}
+        defaultValue={note}
       />
     </>
   )
 }
 
-export default AddRecordForm
+export default RecordForm

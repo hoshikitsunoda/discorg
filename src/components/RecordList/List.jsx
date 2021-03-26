@@ -6,12 +6,15 @@ import {
   Typography,
   Box,
   Grid,
+  Button,
 } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
 import { Link } from 'react-router-dom'
 
 import CloseIcon from '../../images/icons/close-icon.svg'
 import { shortenString, mediaIcon } from '../../utils/helper'
+import { useToggle } from '../../hooks'
+import { ConfirmModal } from '../shared/Modal'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
 
 const List = ({ recordData, uid, handleDelete }) => {
   const classes = useStyles()
+  const { value, toggleValue } = useToggle(false)
 
   const {
     artist,
@@ -69,6 +73,12 @@ const List = ({ recordData, uid, handleDelete }) => {
   } = recordData[uid]
 
   const icon = mediaIcon(format)
+
+  const handleClick = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    toggleValue()
+  }
 
   return (
     <Card className={classes.root}>
@@ -155,7 +165,7 @@ const List = ({ recordData, uid, handleDelete }) => {
                     src={CloseIcon}
                     alt="delete item"
                     style={{ width: 20 }}
-                    onClick={(event) => handleDelete(event, uid, id)}
+                    onClick={(event) => handleClick(event)}
                   />
                 </Box>
               </Grid>
@@ -163,6 +173,35 @@ const List = ({ recordData, uid, handleDelete }) => {
           </CardContent>
         </CardActionArea>
       </Link>
+      {value && (
+        <ConfirmModal
+          setOpen={toggleValue}
+          open={value}
+          handleClose={toggleValue}
+          title="Are you sure you want to delete this item?"
+          subtitle="It can't be undone."
+        >
+          <Box
+            p={2}
+            pb={0}
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            width={1}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={(event) => handleDelete(event, uid, id)}
+            >
+              Delete
+            </Button>
+            <Button variant="contained" color="secondary" onClick={toggleValue}>
+              Cancel
+            </Button>
+          </Box>
+        </ConfirmModal>
+      )}
     </Card>
   )
 }

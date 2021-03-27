@@ -6,6 +6,8 @@ import {
   Typography,
   Box,
   Button,
+  useMediaQuery,
+  useTheme,
 } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
 import { Link } from 'react-router-dom'
@@ -35,9 +37,17 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontSize: 16,
+
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 20,
+    },
   },
   artist: {
     fontSize: 14,
+
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 16,
+    },
   },
   panel: {
     textDecoration: 'none',
@@ -57,6 +67,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Panel = ({ recordData, uid, handleDelete }) => {
   const classes = useStyles()
+  const theme = useTheme()
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
   const { value, toggleValue } = useToggle(false)
 
   const {

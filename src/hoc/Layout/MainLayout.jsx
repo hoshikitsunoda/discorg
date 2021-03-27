@@ -32,17 +32,19 @@ const MainLayout = ({ title, children }) => {
         />
       </Helmet>
       <Container maxWidth={false} className={classes.root}>
-        <Header />
+        <Header title={title} />
         <Container component="main">{children}</Container>
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          width={1}
-          style={{ padding: '100px 0 40px' }}
-        >
-          <img src={Logo} alt="discorg logo" className={classes.logo} />
-        </Box>
+        {title !== 'home' && (
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            width={1}
+            style={{ padding: '100px 0 40px' }}
+          >
+            <img src={Logo} alt="discorg logo" className={classes.logo} />
+          </Box>
+        )}
       </Container>
     </>
   )

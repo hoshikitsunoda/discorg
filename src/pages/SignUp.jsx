@@ -5,7 +5,6 @@ import {
   Box,
   Typography,
 } from '@material-ui/core'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import { Link } from 'react-router-dom'
 
 import AuthLayout from '../hoc/Layout/AuthLayout'
@@ -39,7 +38,6 @@ const SignUp = () => {
 
   return (
     <AuthLayout title="Sign Up">
-      <AccountCircleIcon fontSize="large" />
       <form>
         <TextField
           variant="filled"

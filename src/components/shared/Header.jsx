@@ -42,8 +42,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Header = () => {
-  const { data, getUser } = useGetUser()
+const Header = ({ title }) => {
+  const {
+    getUser,
+    state: { user },
+  } = useGetUser()
   const { signOut } = useAuth()
   const [borderColor, setBorderColor] = useState('#F7B32B')
   const [anchorEl, setAnchorEl] = useState(null)
@@ -63,7 +66,7 @@ const Header = () => {
       isMounted = false
       clearInterval(intervalID)
     }
-  }, [getUser, borderColor])
+  }, [getUser])
 
   const handleClick = ({ currentTarget }) => {
     setAnchorEl(currentTarget)
@@ -73,7 +76,7 @@ const Header = () => {
     setAnchorEl(null)
   }
 
-  const { email, uid } = data
+  const { email, uid } = user || {}
 
   return (
     <AppBar position="static" color="transparent" className={classes.root}>
@@ -87,21 +90,27 @@ const Header = () => {
               width={1}
             >
               <Box display="flex" alignItems="center">
-                <div>
-                  <IconButton
-                    aria-label="account of current user"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    color="primary"
-                    onClick={handleClick}
-                  >
-                    <AccountCircle />
-                  </IconButton>
-                </div>
-                <Typography variant="body1">{email}</Typography>
+                {!!user && (
+                  <>
+                    <Box>
+                      <IconButton
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        color="primary"
+                        onClick={handleClick}
+                      >
+                        <AccountCircle />
+                      </IconButton>
+                    </Box>
+                    <Typography variant="body1">{email}</Typography>
+                  </>
+                )}
               </Box>
               <Box display="flex" alignItems="center" p={2}>
-                <img src={Logo} alt="discorg logo" className={classes.logo} />
+                {title !== 'home' && (
+                  <img src={Logo} alt="discorg logo" className={classes.logo} />
+                )}
               </Box>
             </Box>
             <Menu

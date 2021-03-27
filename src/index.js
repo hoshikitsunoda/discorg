@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import './index.css'
 import App from './App'
+import { StateProvider } from './context/StateProvider'
+import reducer, { initialState } from './context/reducer'
 
 const theme = createMuiTheme({
   palette: {
@@ -36,7 +38,9 @@ ReactDOM.render(
     <ToastContainer />
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <App />
+      <StateProvider initialState={initialState} reducer={reducer}>
+        <App />
+      </StateProvider>
     </ThemeProvider>
   </Router>,
   document.getElementById('root')

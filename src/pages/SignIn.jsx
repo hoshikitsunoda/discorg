@@ -83,7 +83,7 @@ const SignIn = () => {
           variant="outlined"
           color="primary"
         >
-          <Link to="/signup">Sign Up</Link>
+          <Link to="/signup">Register</Link>
         </Button>
         <Box width={1} className={classes.link}>
           <Typography>

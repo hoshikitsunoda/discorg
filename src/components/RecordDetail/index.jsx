@@ -9,6 +9,8 @@ import {
   TableCell,
   Button,
   makeStyles,
+  useMediaQuery,
+  useTheme,
 } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
@@ -24,11 +26,24 @@ const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(4),
   },
+  item: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    },
+  },
 }))
 
 const RecordDetail = ({ recordData, getRecords }) => {
   const classes = useStyles()
   const { id: itemId } = useParams()
+  const theme = useTheme()
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
+
   const { value: edit, toggleValue } = useToggle(false)
   const [recordInfo, setRecordInfo] = useState({})
   const [touched, setTouched] = useState({})
@@ -102,21 +117,15 @@ const RecordDetail = ({ recordData, getRecords }) => {
           )}
         </Box>
       </Box>
-      <Box
-        display="flex"
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="center"
-        px={4}
-      >
-        <Box width={1} height={1}>
+      <Box className={classes.item} px={isSmall ? 2 : 1}>
+        <Box width={1} height={1} my={isSmall ? 4 : 0}>
           <img
             style={{ width: '100%' }}
             src={imageUrl}
             alt={`${artist} - ${title}`}
           />
         </Box>
-        <Box width={1} p={4}>
+        <Box width={1} p={isSmall ? 1 : 4}>
           {edit ? (
             <Edit
               recordData={itemToDisplay}
@@ -128,7 +137,7 @@ const RecordDetail = ({ recordData, getRecords }) => {
             />
           ) : (
             <>
-              <Typography variant="h3" component="h3">
+              <Typography variant={isSmall ? 'h4' : 'h3'} component="h3">
                 {title}
               </Typography>
               <Box py={2} fontStyle="italic">
@@ -142,7 +151,7 @@ const RecordDetail = ({ recordData, getRecords }) => {
                     <TableRow>
                       <TableCell variant="head">Label:</TableCell>
                       <TableCell>
-                        <Typography variant="h5" component="h5">
+                        <Typography variant="h6" component="h5">
                           {`${label} - ${catalogNumber}`}
                         </Typography>
                       </TableCell>

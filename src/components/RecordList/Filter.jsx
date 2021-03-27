@@ -1,7 +1,12 @@
 import { makeStyles, Chip, Box, Typography } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    overflow: 'scroll',
+  },
   button: {
     marginRight: theme.spacing(1),
     backgroundColor: '#eee',
@@ -16,6 +21,14 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.secondary.main,
   },
+  title: {
+    fontWeight: 600,
+
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+      fontSize: 22,
+    },
+  },
 }))
 
 const Filter = ({ recordData, activeGenre, setActiveGenre }) => {
@@ -28,9 +41,9 @@ const Filter = ({ recordData, activeGenre, setActiveGenre }) => {
   genres = [...new Set(genres)]
 
   return (
-    <Box display="flex" flexDirection="row" alignItems="center" py={4}>
+    <Box className={classes.root} py={4}>
       <Box mr={2}>
-        <Typography variant="h4" component="h2" style={{ fontWeight: 600 }}>
+        <Typography variant="h4" component="h2" className={classes.title}>
           {activeGenre}
         </Typography>
       </Box>

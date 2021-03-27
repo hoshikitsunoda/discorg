@@ -13,12 +13,10 @@ const useGetUser = () => {
     setLoading(true)
     try {
       auth().onAuthStateChanged((user) => {
-        if (user) {
-          dispatch({
-            type: actionTypes.SET_USER,
-            user: user,
-          })
-        }
+        dispatch({
+          type: actionTypes.SET_USER,
+          user: user,
+        })
         setLoading(false)
       })
     } catch (err) {

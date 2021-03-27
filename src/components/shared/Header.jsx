@@ -90,7 +90,7 @@ const Header = ({ title }) => {
               width={1}
             >
               <Box display="flex" alignItems="center">
-                {!!user && (
+                {!!user && title !== 'home' && (
                   <>
                     <Box>
                       <IconButton

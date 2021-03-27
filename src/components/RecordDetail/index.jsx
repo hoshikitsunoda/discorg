@@ -116,7 +116,7 @@ const RecordDetail = ({ recordData, getRecords }) => {
             alt={`${artist} - ${title}`}
           />
         </Box>
-        <Box width={1} p={4} className={classes.detail}>
+        <Box width={1} p={4}>
           {edit ? (
             <Edit
               recordData={itemToDisplay}

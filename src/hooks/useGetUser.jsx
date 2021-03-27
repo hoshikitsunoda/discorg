@@ -2,17 +2,22 @@ import { useState, useCallback } from 'react'
 import { toast } from 'react-toastify'
 
 import { auth } from '../services/firebase'
+import { useStateValue } from '../context/StateProvider'
+import { actionTypes } from '../context/reducer'
 
 const useGetUser = () => {
-  const [data, setData] = useState({})
   const [loading, setLoading] = useState(false)
+  const [state, dispatch] = useStateValue()
 
-  const getUser = useCallback(() => {
+  const getUser = useCallback(async () => {
     setLoading(true)
     try {
       auth().onAuthStateChanged((user) => {
         if (user) {
-          setData(user)
+          dispatch({
+            type: actionTypes.SET_USER,
+            user: user,
+          })
         }
         setLoading(false)
       })
@@ -20,9 +25,9 @@ const useGetUser = () => {
       toast.error(err.message)
       setLoading(false)
     }
-  }, [])
+  }, [dispatch])
 
-  return { data, loading, getUser }
+  return { loading, getUser, state }
 }
 
 export default useGetUser

@@ -84,7 +84,7 @@ const SignUp = () => {
           color="primary"
           onClick={handleSubmit}
         >
-          Sign Up
+          Register
         </Button>
         <Box width={1} className={classes.link}>
           <Typography>

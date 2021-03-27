@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
 import Dashboard from './pages/Dashboard'
+import Landing from './pages/Landing'
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
         </Route>
         <Route path="/dashboard">
           <Dashboard />
+        </Route>
+        <Route path="/" exact>
+          <Landing />
         </Route>
       </Switch>
     </>

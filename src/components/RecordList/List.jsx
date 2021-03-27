@@ -12,8 +12,8 @@ import {
 } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
 import { Link } from 'react-router-dom'
+import CloseIcon from '@material-ui/icons/Close'
 
-import CloseIcon from '../../images/icons/close-icon.svg'
 import { shortenString, mediaIcon } from '../../utils/helper'
 import { useToggle } from '../../hooks'
 import { ConfirmModal } from '../shared/Modal'
@@ -166,11 +166,9 @@ const List = ({ recordData, uid, handleDelete }) => {
                 className={classes.flex}
                 style={{ justifyContent: 'center' }}
               >
-                <Box width={20}>
-                  <img
-                    src={CloseIcon}
-                    alt="delete item"
-                    style={{ width: 20 }}
+                <Box>
+                  <CloseIcon
+                    style={{ width: 30 }}
                     onClick={(event) => handleClick(event)}
                   />
                 </Box>

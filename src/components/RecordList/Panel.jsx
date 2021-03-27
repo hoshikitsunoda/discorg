@@ -9,8 +9,8 @@ import {
 } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
 import { Link } from 'react-router-dom'
+import CloseIcon from '@material-ui/icons/Close'
 
-import CloseIcon from '../../images/icons/close-icon.svg'
 import { shortenString, mediaIcon } from '../../utils/helper'
 import { useToggle } from '../../hooks'
 import { ConfirmModal } from '../shared/Modal'
@@ -103,7 +103,7 @@ const Panel = ({ recordData, uid, handleDelete }) => {
                 </Box>
               )}
               <Typography variant="h6" component="h2" className={classes.title}>
-                {shortenString(title, 30)}
+                {shortenString(title, 61)}
               </Typography>
               <Typography
                 variant="body1"
@@ -155,9 +155,7 @@ const Panel = ({ recordData, uid, handleDelete }) => {
                 p={1}
                 mt={1}
               >
-                <img
-                  src={CloseIcon}
-                  alt="delete item"
+                <CloseIcon
                   style={{ width: 30 }}
                   onClick={(event) => handleClick(event)}
                 />

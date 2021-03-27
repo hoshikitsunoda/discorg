@@ -117,7 +117,7 @@ const RecordDetail = ({ recordData, getRecords }) => {
           )}
         </Box>
       </Box>
-      <Box className={classes.item} px={isSmall ? 2 : 1}>
+      <Box className={classes.item} px={1}>
         <Box width={1} height={1} my={isSmall ? 4 : 0}>
           <img
             style={{ width: '100%' }}

@@ -7,6 +7,8 @@ import {
   Box,
   Grid,
   Button,
+  useMediaQuery,
+  useTheme,
 } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
 import { Link } from 'react-router-dom'
@@ -59,6 +61,8 @@ const useStyles = makeStyles((theme) => ({
 
 const List = ({ recordData, uid, handleDelete }) => {
   const classes = useStyles()
+  const theme = useTheme()
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
   const { value, toggleValue } = useToggle(false)
 
   const {
@@ -91,25 +95,27 @@ const List = ({ recordData, uid, handleDelete }) => {
         <CardActionArea>
           <CardContent className={classes.cardContent}>
             <Grid container spacing={2}>
-              <Grid item xs={1} style={{ padding: 0 }}>
-                <Box mr={2}>
-                  {!!imageUrl ? (
-                    <div
-                      className={classes.media}
-                      title={`${artist} - ${title}`}
-                      style={{
-                        backgroundImage: `url(${imageUrl})`,
-                        backgroundSize: 'cover',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundPosition: 'center center',
-                      }}
-                    />
-                  ) : (
-                    <Skeleton variant="rect" width={345} height={200} />
-                  )}
-                </Box>
-              </Grid>
-              <Grid item xs={4} className={classes.flex}>
+              {!isSmall && (
+                <Grid item xs={1} style={{ padding: 0 }}>
+                  <Box mr={2}>
+                    {!!imageUrl ? (
+                      <div
+                        className={classes.media}
+                        title={`${artist} - ${title}`}
+                        style={{
+                          backgroundImage: `url(${imageUrl})`,
+                          backgroundSize: 'cover',
+                          backgroundRepeat: 'no-repeat',
+                          backgroundPosition: 'center center',
+                        }}
+                      />
+                    ) : (
+                      <Skeleton variant="rect" width={345} height={200} />
+                    )}
+                  </Box>
+                </Grid>
+              )}
+              <Grid item xs={isSmall ? 5 : 4} className={classes.flex}>
                 <Typography
                   variant="h6"
                   component="h2"

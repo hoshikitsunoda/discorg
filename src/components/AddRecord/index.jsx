@@ -17,6 +17,9 @@ import { usePostData } from '../../hooks'
 import ImagePreview from '../AddRecord/ImagePreview'
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: '800px !important',
+  },
   form: {
     '& .MuiFilledInput-root': {
       borderRadius: 0,
@@ -70,6 +73,11 @@ const AddRecord = ({ open, handleClose, uid, getRecords }) => {
     await postData(formData)
   }
 
+  const handleCloseModal = () => {
+    handleClose()
+    setImagePreview('')
+  }
+
   useEffect(() => {
     // close modal if close state from usePostData is true
     if (close) {
@@ -79,7 +87,11 @@ const AddRecord = ({ open, handleClose, uid, getRecords }) => {
   }, [handleClose, close, getRecords])
 
   return (
-    <CustomModal open={open} handleClose={handleClose} style={{ width: 800 }}>
+    <CustomModal
+      open={open}
+      handleClose={handleClose}
+      style={{ maxWidth: 800 }}
+    >
       <Box
         display="flex"
         flexDirection="row"
@@ -87,7 +99,7 @@ const AddRecord = ({ open, handleClose, uid, getRecords }) => {
         alignItems="center"
       >
         <Typography variant="h6">What record are you adding?</Typography>
-        <IconButton onClick={handleClose}>
+        <IconButton onClick={handleCloseModal}>
           <CloseIcon />
         </IconButton>
       </Box>
@@ -96,10 +108,10 @@ const AddRecord = ({ open, handleClose, uid, getRecords }) => {
           'Oops, something went wrong:('
         ) : (
           <>
-            <Grid item xs={8}>
+            <Grid item xs={12} sm={8}>
               <RecordForm handleChange={handleChange} />
             </Grid>
-            <Grid item xs={4} className={classes.rightCol}>
+            <Grid item xs={12} sm={4} className={classes.rightCol}>
               <ImageUpload
                 uid={uid}
                 handleFile={setImagePreview}
@@ -118,7 +130,7 @@ const AddRecord = ({ open, handleClose, uid, getRecords }) => {
                 <Button
                   variant="outlined"
                   color="primary"
-                  onClick={handleClose}
+                  onClick={handleCloseModal}
                 >
                   Cancel
                 </Button>

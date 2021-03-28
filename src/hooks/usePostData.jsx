@@ -50,20 +50,23 @@ const usePostData = () => {
     [uid]
   )
 
-  const editData = useCallback(async (id, newData) => {
-    setSubmitting(true)
-    try {
-      let updates = {}
-      flatten(newData, id, updates, uid)
-      await db.ref().update(updates)
-      toast.success('Successfully updated!')
-      setSubmitting(false)
-    } catch (err) {
-      toast.error(err.message)
-      setSubmitting(false)
-      setError(err.message)
-    }
-  }, [])
+  const editData = useCallback(
+    async (id, newData) => {
+      setSubmitting(true)
+      try {
+        let updates = {}
+        flatten(newData, id, updates, uid)
+        await db.ref().update(updates)
+        toast.success('Successfully updated!')
+        setSubmitting(false)
+      } catch (err) {
+        toast.error(err.message)
+        setSubmitting(false)
+        setError(err.message)
+      }
+    },
+    [uid]
+  )
 
   return { submitting, close, postData, error, deleteData, editData }
 }

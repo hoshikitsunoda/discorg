@@ -19,13 +19,13 @@ const useGetRecords = () => {
       const { data } = await axios.get(`/user/${uid}/records.json`)
       if (data) {
         setData(data)
-        setLoading(false)
       }
+      setLoading(false)
     } catch (err) {
       toast.error(err.message)
       setLoading(false)
     }
-  }, [])
+  }, [uid])
 
   return { data, loading, getRecords }
 }

@@ -3,6 +3,8 @@ import firebase from 'firebase'
 import { useDropzone } from 'react-dropzone'
 import { toast } from 'react-toastify'
 
+import { useGetUser } from '../../hooks'
+
 const baseStyle = {
   padding: '0 20px',
   borderWidth: 2,
@@ -29,6 +31,11 @@ const rejectStyle = {
 }
 
 const ImageUpload = ({ uid, handleFile, handleUrl, setUploaded }) => {
+  const {
+    state: { user },
+  } = useGetUser()
+
+  const { uid: userId } = user || {}
   const onDrop = useCallback(
     async (acceptedFiles) => {
       setUploaded(true)
@@ -38,6 +45,7 @@ const ImageUpload = ({ uid, handleFile, handleUrl, setUploaded }) => {
           .storage()
           .ref()
           .child('images')
+          .child(userId)
           .child(`${uid}.jpg`)
         await storageRef.put(acceptedFiles[0])
         storageRef.getDownloadURL().then((url) => handleUrl(url))
@@ -46,7 +54,7 @@ const ImageUpload = ({ uid, handleFile, handleUrl, setUploaded }) => {
         setUploaded(false)
       }
     },
-    [handleFile, handleUrl, setUploaded, uid]
+    [handleFile, handleUrl, setUploaded, uid, userId]
   )
 
   const {

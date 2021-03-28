@@ -14,6 +14,11 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[4],
     padding: theme.spacing(2, 4, 3),
     outline: 'none',
+    overflow: 'scroll',
+
+    [theme.breakpoints.down('sm')]: {
+      height: '100%',
+    },
   },
 }))
 

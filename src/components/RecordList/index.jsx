@@ -18,6 +18,12 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
     bottom: 30,
     right: 100,
+
+    [theme.breakpoints.down('sm')]: {
+      bottom: 20,
+      right: '50%',
+      transform: 'translateX(50%)',
+    },
   },
   icon: {
     fontSize: 64,

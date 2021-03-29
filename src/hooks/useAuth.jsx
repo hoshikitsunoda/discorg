@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { auth } from '../services/firebase'
@@ -18,44 +18,50 @@ const useAuth = () => {
     })
   }
 
-  const signUp = async (email, password) => {
-    try {
-      const result = await auth().createUserWithEmailAndPassword(
-        email,
-        password
-      )
-      dispatch({
-        type: actionTypes.SET_USER,
-        user: result.user,
-      })
-      await localStorage.setItem(
-        'discorg_user_information',
-        JSON.stringify(result.user)
-      )
-      history.push('/dashboard')
-    } catch (err) {
-      toast.error(err.message)
-    }
-  }
+  const signUp = useCallback(
+    async (email, password) => {
+      try {
+        const result = await auth().createUserWithEmailAndPassword(
+          email,
+          password
+        )
+        dispatch({
+          type: actionTypes.SET_USER,
+          user: result.user,
+        })
+        await localStorage.setItem(
+          'discorg_user_information',
+          JSON.stringify(result.user)
+        )
+        history.push('/dashboard')
+      } catch (err) {
+        toast.error(err.message)
+      }
+    },
+    [dispatch, history]
+  )
 
-  const signIn = async (email, password) => {
-    try {
-      const result = await auth().signInWithEmailAndPassword(email, password)
-      dispatch({
-        type: actionTypes.SET_USER,
-        user: result.user,
-      })
-      await localStorage.setItem(
-        'discorg_user_information',
-        JSON.stringify(result.user)
-      )
-      history.push('/dashboard')
-    } catch (err) {
-      toast.error(err.message)
-    }
-  }
+  const signIn = useCallback(
+    async (email, password) => {
+      try {
+        const result = await auth().signInWithEmailAndPassword(email, password)
+        dispatch({
+          type: actionTypes.SET_USER,
+          user: result.user,
+        })
+        await localStorage.setItem(
+          'discorg_user_information',
+          JSON.stringify(result.user)
+        )
+        history.push('/dashboard')
+      } catch (err) {
+        toast.error(err.message)
+      }
+    },
+    [dispatch, history]
+  )
 
-  const signOut = async () => {
+  const signOut = useCallback(async () => {
     try {
       await auth().signOut()
       dispatch({
@@ -66,7 +72,7 @@ const useAuth = () => {
     } catch (err) {
       toast.error(err.message)
     }
-  }
+  }, [dispatch, history])
 
   useEffect(() => {
     const user = localStorage.getItem('discorg_user_information')

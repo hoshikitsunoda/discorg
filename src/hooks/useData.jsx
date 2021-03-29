@@ -10,9 +10,23 @@ const useData = () => {
   const [submitting, setSubmitting] = useState(false)
   const [close, setClose] = useState(false)
   const [error, setError] = useState('')
+  const [data, setData] = useState({})
   const { user } = useAuth()
-
   const { uid } = user || {}
+
+  const getData = useCallback(async () => {
+    setSubmitting(true)
+    try {
+      const { data } = await axios.get(`/user/${uid}/records.json`)
+      if (uid && data) {
+        setData(data)
+      }
+      setSubmitting(false)
+    } catch (err) {
+      toast.error(err.message)
+      setSubmitting(false)
+    }
+  }, [uid])
 
   const postData = useCallback(
     async (data) => {
@@ -66,7 +80,16 @@ const useData = () => {
     [uid]
   )
 
-  return { submitting, close, postData, error, deleteData, editData }
+  return {
+    submitting,
+    close,
+    postData,
+    error,
+    deleteData,
+    editData,
+    getData,
+    data,
+  }
 }
 
 export default useData

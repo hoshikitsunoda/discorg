@@ -3,22 +3,22 @@ import { v4 as uuidv4 } from 'uuid'
 import { Route, Switch } from 'react-router-dom'
 
 import MainLayout from '../hoc/Layout/MainLayout'
-import { useGetRecords, useToggle } from '../hooks'
+import { useData, useToggle } from '../hooks'
 import AddRecord from '../components/AddRecord'
 import RecordList from '../components/RecordList'
 import RecordDetail from '../components/RecordDetail'
 
 const Dashboard = () => {
-  const { recordData, loading, getRecords } = useGetRecords()
+  const { data, submitting, getData } = useData()
   const { value, toggleValue } = useToggle()
   const [viewOption, setViewOption] = useState('panel')
   const uid = uuidv4()
 
   useEffect(() => {
-    getRecords()
-  }, [getRecords])
+    getData()
+  }, [getData])
 
-  if (loading) {
+  if (submitting) {
     return 'Loading...'
   }
 
@@ -31,11 +31,11 @@ const Dashboard = () => {
             exact
             render={() => (
               <RecordList
-                recordData={recordData}
+                recordData={data}
                 toggleValue={toggleValue}
                 setViewOption={setViewOption}
                 viewOption={viewOption}
-                getRecords={getRecords}
+                getRecords={getData}
               />
             )}
           />
@@ -43,7 +43,7 @@ const Dashboard = () => {
             path="/dashboard/item/:id"
             exact
             render={() => (
-              <RecordDetail recordData={recordData} getRecords={getRecords} />
+              <RecordDetail recordData={data} getRecords={getData} />
             )}
           />
         </Switch>
@@ -51,7 +51,7 @@ const Dashboard = () => {
           open={value}
           handleClose={toggleValue}
           uid={uid}
-          getRecords={getRecords}
+          getRecords={getData}
         />
       </MainLayout>
     </>

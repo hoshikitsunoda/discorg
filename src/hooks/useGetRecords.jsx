@@ -5,7 +5,7 @@ import axios from '../utils/axios-instance'
 import { useAuth } from '../hooks'
 
 const useGetRecords = () => {
-  const [data, setData] = useState({})
+  const [recordData, setRecordData] = useState({})
   const [loading, setLoading] = useState(false)
   const { user } = useAuth()
 
@@ -16,7 +16,7 @@ const useGetRecords = () => {
     try {
       const { data } = await axios.get(`/user/${uid}/records.json`)
       if (uid && data) {
-        setData(data)
+        setRecordData(data)
       }
       setLoading(false)
     } catch (err) {
@@ -25,7 +25,7 @@ const useGetRecords = () => {
     }
   }, [uid])
 
-  return { data, loading, getRecords }
+  return { recordData, loading, getRecords }
 }
 
 export default useGetRecords

@@ -9,7 +9,7 @@ import RecordList from '../components/RecordList'
 import RecordDetail from '../components/RecordDetail'
 
 const Dashboard = () => {
-  const { data, loading, getRecords } = useGetRecords()
+  const { recordData, loading, getRecords } = useGetRecords()
   const { value, toggleValue } = useToggle()
   const [viewOption, setViewOption] = useState('panel')
   const uid = uuidv4()
@@ -31,7 +31,7 @@ const Dashboard = () => {
             exact
             render={() => (
               <RecordList
-                recordData={data}
+                recordData={recordData}
                 toggleValue={toggleValue}
                 setViewOption={setViewOption}
                 viewOption={viewOption}
@@ -43,7 +43,7 @@ const Dashboard = () => {
             path="/dashboard/item/:id"
             exact
             render={() => (
-              <RecordDetail recordData={data} getRecords={getRecords} />
+              <RecordDetail recordData={recordData} getRecords={getRecords} />
             )}
           />
         </Switch>

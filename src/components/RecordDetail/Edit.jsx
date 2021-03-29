@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Box, Button, CircularProgress, makeStyles } from '@material-ui/core'
 
 import RecordFrom from '../shared/RecordForm'
-import { usePostData } from '../../hooks'
+import { useData } from '../../hooks'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -35,7 +35,7 @@ const Edit = ({
 }) => {
   const classes = useStyles()
   const [input, setInput] = useState({})
-  const { editData, submitting } = usePostData()
+  const { editData, submitting } = useData()
 
   const handleChange = ({ target: { name, value } }) => {
     setInput({

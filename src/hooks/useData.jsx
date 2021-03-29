@@ -4,9 +4,9 @@ import { toast } from 'react-toastify'
 import axios from '../utils/axios-instance'
 import { db } from '../services/firebase'
 import { flatten } from '../utils/helper'
-import { useAuth } from '../hooks'
+import { useAuth } from '.'
 
-const usePostData = () => {
+const useData = () => {
   const [submitting, setSubmitting] = useState(false)
   const [close, setClose] = useState(false)
   const [error, setError] = useState('')
@@ -69,4 +69,4 @@ const usePostData = () => {
   return { submitting, close, postData, error, deleteData, editData }
 }
 
-export default usePostData
+export default useData

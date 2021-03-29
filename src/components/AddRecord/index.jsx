@@ -13,7 +13,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import { CustomModal } from '../shared/Modal'
 import RecordForm from '../shared/RecordForm'
 import ImageUpload from './ImageUpload'
-import { usePostData } from '../../hooks'
+import { useData } from '../../hooks'
 import ImagePreview from '../AddRecord/ImagePreview'
 
 const useStyles = makeStyles((theme) => ({
@@ -54,7 +54,7 @@ const AddRecord = ({ open, handleClose, uid, getRecords }) => {
   const [imagePreview, setImagePreview] = useState('')
   const [uploaded, setUploaded] = useState(false)
 
-  const { submitting, close, postData, error } = usePostData()
+  const { submitting, close, postData, error } = useData()
 
   const handleChange = ({ target: { name, value } }) => {
     setRecordInfo({

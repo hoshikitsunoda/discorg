@@ -8,7 +8,7 @@ import Sort from './Sort'
 import Search from './Search'
 import List from './List'
 import ViewSwitch from '../shared/ViewSwitch'
-import { usePostData, useImage } from '../../hooks'
+import { useData, useImage } from '../../hooks'
 import { sortItems } from '../../utils/helper'
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +43,7 @@ const RecordList = ({
   const [activeGenre, setActiveGenre] = useState('Collection')
   const [sort, setSort] = useState('newest')
   const [searchTerm, setSearchTerm] = useState('')
-  const { deleteData } = usePostData()
+  const { deleteData } = useData()
   const { deleteImage } = useImage()
 
   let dataArray = Object.keys(recordData)

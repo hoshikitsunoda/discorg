@@ -2,13 +2,11 @@ import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 import firebase from 'firebase'
 
-import { useGetUser } from '../hooks'
+import { useAuth } from '../hooks'
 
 const useImage = () => {
   const [loading, setLoading] = useState(false)
-  const {
-    state: { user },
-  } = useGetUser()
+  const { user } = useAuth()
 
   const { uid } = user || {}
 

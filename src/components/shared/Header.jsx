@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   AppBar,
   Toolbar,
@@ -11,31 +11,13 @@ import {
 } from '@material-ui/core'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 
-import { useGetUser, useAuth } from '../../hooks'
-import { randomColor } from '../../utils/helper'
+import { useAuth } from '../../hooks'
 import Logo from '../../images/discorg.png'
+import { MultiColorBorder } from '../shared/Border'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: 'none',
-  },
-  border: {
-    borderBottom: '8px solid #F72C25',
-
-    '&::after': {
-      borderBottom: ({ borderColor }) => `8px solid ${borderColor}`,
-      background: 'none',
-      content: '""',
-      display: 'block',
-      transition: 'all 1s ease-in-out',
-    },
-
-    '&::before': {
-      borderBottom: '8px solid #2F52E0',
-      background: 'none',
-      content: '""',
-      display: 'block',
-    },
   },
   logo: {
     width: 120,
@@ -43,30 +25,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Header = ({ title }) => {
-  const {
-    getUser,
-    state: { user },
-  } = useGetUser()
+  const { user } = useAuth()
+
   const { signOut } = useAuth()
-  const [borderColor, setBorderColor] = useState('#F7B32B')
   const [anchorEl, setAnchorEl] = useState(null)
-  const classes = useStyles({ borderColor })
-
-  useEffect(() => {
-    let isMounted = true
-    if (isMounted) {
-      getUser()
-    }
-
-    const intervalID = setTimeout(() => {
-      setBorderColor(randomColor())
-    }, 1000)
-
-    return () => {
-      isMounted = false
-      clearInterval(intervalID)
-    }
-  }, [getUser])
+  const classes = useStyles()
 
   const handleClick = ({ currentTarget }) => {
     setAnchorEl(currentTarget)
@@ -90,7 +53,7 @@ const Header = ({ title }) => {
               width={1}
             >
               <Box display="flex" alignItems="center">
-                {!!user && title !== 'home' && (
+                {!!user && title === 'dashboard' && (
                   <>
                     <Box>
                       <IconButton
@@ -108,7 +71,7 @@ const Header = ({ title }) => {
                 )}
               </Box>
               <Box display="flex" alignItems="center" p={2}>
-                {title !== 'home' && (
+                {title === 'dashboard' && (
                   <img src={Logo} alt="discorg logo" className={classes.logo} />
                 )}
               </Box>
@@ -125,7 +88,7 @@ const Header = ({ title }) => {
           </>
         )}
       </Toolbar>
-      <Box className={classes.border} borderColor={borderColor}></Box>
+      <MultiColorBorder />
     </AppBar>
   )
 }

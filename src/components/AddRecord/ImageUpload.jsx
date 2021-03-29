@@ -3,7 +3,7 @@ import firebase from 'firebase'
 import { useDropzone } from 'react-dropzone'
 import { toast } from 'react-toastify'
 
-import { useGetUser } from '../../hooks'
+import { useAuth } from '../../hooks'
 
 const baseStyle = {
   padding: '0 20px',
@@ -31,11 +31,10 @@ const rejectStyle = {
 }
 
 const ImageUpload = ({ uid, handleFile, handleUrl, setUploaded }) => {
-  const {
-    state: { user },
-  } = useGetUser()
+  const { user } = useAuth()
 
   const { uid: userId } = user || {}
+
   const onDrop = useCallback(
     async (acceptedFiles) => {
       setUploaded(true)

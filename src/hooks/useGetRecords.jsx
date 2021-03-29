@@ -17,7 +17,7 @@ const useGetRecords = () => {
     setLoading(true)
     try {
       const { data } = await axios.get(`/user/${uid}/records.json`)
-      if (data) {
+      if (uid && data) {
         setData(data)
       }
       setLoading(false)

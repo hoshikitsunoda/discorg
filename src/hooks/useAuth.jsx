@@ -20,7 +20,18 @@ const useAuth = () => {
 
   const signUp = async (email, password) => {
     try {
-      await auth().createUserWithEmailAndPassword(email, password)
+      const result = await auth().createUserWithEmailAndPassword(
+        email,
+        password
+      )
+      dispatch({
+        type: actionTypes.SET_USER,
+        user: result.user,
+      })
+      await localStorage.setItem(
+        'discorg_user_information',
+        JSON.stringify(result.user)
+      )
       history.push('/dashboard')
     } catch (err) {
       toast.error(err.message)

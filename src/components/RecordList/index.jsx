@@ -8,7 +8,8 @@ import Sort from './Sort'
 import Search from './Search'
 import List from './List'
 import ViewSwitch from '../shared/ViewSwitch'
-import { usePostData, useImage } from '../../hooks'
+import { useData, useImage } from '../../hooks'
+import { sortItems } from '../../utils/helper'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +43,7 @@ const RecordList = ({
   const [activeGenre, setActiveGenre] = useState('Collection')
   const [sort, setSort] = useState('newest')
   const [searchTerm, setSearchTerm] = useState('')
-  const { deleteData } = usePostData()
+  const { deleteData } = useData()
   const { deleteImage } = useImage()
 
   let dataArray = Object.keys(recordData)
@@ -66,40 +67,7 @@ const RecordList = ({
   dataArray =
     activeGenre === 'Collection' ? dataArray.reverse() : filteredDataArray
 
-  switch (sort) {
-    case 'newest':
-      dataArray.sort(
-        (a, b) => recordData[b].createdAt - recordData[a].createdAt
-      )
-      break
-    case 'oldest':
-      dataArray.sort(
-        (a, b) => recordData[a].createdAt - recordData[b].createdAt
-      )
-      break
-    case 'artist-a-z':
-      dataArray.sort((a, b) =>
-        recordData[a].artist.localeCompare(recordData[b].artist)
-      )
-      break
-    case 'artist-z-a':
-      dataArray.sort((a, b) =>
-        recordData[b].artist.localeCompare(recordData[a].artist)
-      )
-      break
-    case 'title-a-z':
-      dataArray.sort((a, b) =>
-        recordData[a].title.localeCompare(recordData[b].title)
-      )
-      break
-    case 'title-z-a':
-      dataArray.sort((a, b) =>
-        recordData[b].title.localeCompare(recordData[a].title)
-      )
-      break
-    default:
-      return
-  }
+  dataArray = sortItems(sort, dataArray, recordData)
 
   const handleDelete = async (event, itemId, imageId) => {
     event.stopPropagation()
@@ -112,33 +80,30 @@ const RecordList = ({
   return (
     <>
       <Container maxWidth="md" className={classes.root}>
-        {recordData ? (
+        <Box
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Search setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
+          <ViewSwitch setViewOption={setViewOption} viewOption={viewOption} />
+        </Box>
+        <Box
+          display="flex"
+          flexDirection="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Filter
+            recordData={recordData}
+            activeGenre={activeGenre}
+            setActiveGenre={setActiveGenre}
+          />
+          <Sort setSort={setSort} sort={sort} />
+        </Box>
+        {dataArray.length > 0 ? (
           <>
-            <Box
-              display="flex"
-              flexDirection="row"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <Search setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
-              <ViewSwitch
-                setViewOption={setViewOption}
-                viewOption={viewOption}
-              />
-            </Box>
-            <Box
-              display="flex"
-              flexDirection="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Filter
-                recordData={recordData}
-                activeGenre={activeGenre}
-                setActiveGenre={setActiveGenre}
-              />
-              <Sort setSort={setSort} sort={sort} />
-            </Box>
             <Grid container spacing={2}>
               {dataArray.map((uid) => {
                 return viewOption === 'panel' ? (

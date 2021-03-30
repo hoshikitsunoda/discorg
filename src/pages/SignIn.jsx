@@ -8,7 +8,7 @@ import {
 import { Link } from 'react-router-dom'
 
 import AuthLayout from '../hoc/Layout/AuthLayout'
-import useAuth from '../hooks/useAuth'
+import { useAuth } from '../hooks'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -28,9 +28,9 @@ const useStyles = makeStyles((theme) => ({
 const SignIn = () => {
   const classes = useStyles()
 
-  const { signIn, handleChange, data: userInfo } = useAuth()
+  const { signIn, handleCredentials, credentials } = useAuth()
 
-  const { email, password } = userInfo
+  const { email, password } = credentials
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -50,7 +50,7 @@ const SignIn = () => {
           name="email"
           autoComplete="email"
           autoFocus
-          onChange={handleChange}
+          onChange={handleCredentials}
         />
         <TextField
           variant="filled"
@@ -62,7 +62,7 @@ const SignIn = () => {
           type="password"
           id="password"
           autoComplete="current-password"
-          onChange={handleChange}
+          onChange={handleCredentials}
         />
         <Button
           className={classes.button}

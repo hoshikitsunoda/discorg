@@ -27,9 +27,9 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUp = () => {
   const classes = useStyles()
-  const { signUp, handleChange, data: userInfo } = useAuth()
+  const { signUp, handleCredentials, credentials } = useAuth()
 
-  const { email, password } = userInfo
+  const { email, password } = credentials
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -49,7 +49,7 @@ const SignUp = () => {
           name="email"
           autoComplete="email"
           autoFocus
-          onChange={handleChange}
+          onChange={handleCredentials}
         />
         <TextField
           variant="filled"
@@ -61,7 +61,7 @@ const SignUp = () => {
           type="password"
           id="password"
           autoComplete="current-password"
-          onChange={handleChange}
+          onChange={handleCredentials}
         />
         <TextField
           variant="filled"

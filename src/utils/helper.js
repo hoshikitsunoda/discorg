@@ -36,13 +36,40 @@ export const mediaIcon = (format) => {
   return icon
 }
 
-export const flatten = (json, id, newObj) => {
+export const flatten = (json, id, newObj, uid) => {
   Object.keys(json).forEach((key) => {
-    const path = `/records/${id}/${key}`
+    const path = `/user/${uid}/records/${id}/${key}`
     if (typeof json[key] === 'object') {
       flatten(json[key], path)
     } else {
       newObj[path] = json[key]
     }
   })
+}
+
+export const sortItems = (sort, array, data) => {
+  switch (sort) {
+    case 'newest':
+      array.sort((a, b) => data[b].createdAt - data[a].createdAt)
+      break
+    case 'oldest':
+      array.sort((a, b) => data[a].createdAt - data[b].createdAt)
+      break
+    case 'artist-a-z':
+      array.sort((a, b) => data[a].artist.localeCompare(data[b].artist))
+      break
+    case 'artist-z-a':
+      array.sort((a, b) => data[b].artist.localeCompare(data[a].artist))
+      break
+    case 'title-a-z':
+      array.sort((a, b) => data[a].title.localeCompare(data[b].title))
+      break
+    case 'title-z-a':
+      array.sort((a, b) => data[b].title.localeCompare(data[a].title))
+      break
+    default:
+      return
+  }
+
+  return array
 }

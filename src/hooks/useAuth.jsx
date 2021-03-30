@@ -35,7 +35,6 @@ const useAuth = () => {
           'discorg_user_information',
           JSON.stringify(result.user)
         )
-        // the previous uid is being used to create user
         if (result.user.uid) {
           await axios.post(`/user/${result.user.uid}/account.json`, {
             ...data,
@@ -78,6 +77,7 @@ const useAuth = () => {
         type: actionTypes.SET_USER,
         user: null,
       })
+      localStorage.removeItem('discorg_user_information')
       history.push('/signin')
     } catch (err) {
       toast.error(err.message)

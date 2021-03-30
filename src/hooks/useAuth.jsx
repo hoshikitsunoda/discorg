@@ -41,7 +41,7 @@ const useAuth = () => {
             email,
           })
           toast.success('Success!')
-          history.push('/dashboard')
+          history.push(`/dashboard/${result.user.uid}`)
         }
       } catch (err) {
         toast.error(err.message)
@@ -62,7 +62,7 @@ const useAuth = () => {
           'discorg_user_information',
           JSON.stringify(result.user)
         )
-        history.push('/dashboard')
+        history.push(`/dashboard/${result.user.uid}`)
       } catch (err) {
         toast.error(err.message)
       }

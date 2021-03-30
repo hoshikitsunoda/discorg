@@ -27,7 +27,7 @@ const Dashboard = () => {
       <MainLayout title="dashboard">
         <Switch>
           <Route
-            path="/dashboard"
+            path="/dashboard/:user_id"
             exact
             render={() => (
               <RecordList

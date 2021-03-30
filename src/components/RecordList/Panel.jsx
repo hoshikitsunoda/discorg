@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 import CloseIcon from '@material-ui/icons/Close'
 
 import { shortenString, mediaIcon } from '../../utils/helper'
-import { useToggle } from '../../hooks'
+import { useToggle, useAuth } from '../../hooks'
 import { ConfirmModal } from '../shared/Modal'
 
 const useStyles = makeStyles((theme) => ({
@@ -66,6 +66,8 @@ const useStyles = makeStyles((theme) => ({
 const Panel = ({ recordData, uid, handleDelete }) => {
   const classes = useStyles()
   const { value, toggleValue } = useToggle(false)
+  const { user } = useAuth()
+  const { uid: userId } = user || {}
 
   const {
     artist,
@@ -90,7 +92,7 @@ const Panel = ({ recordData, uid, handleDelete }) => {
     <Card className={classes.root}>
       <Link
         to={{
-          pathname: `/dashboard/item/${id}`,
+          pathname: `/dashboard/${userId}/item/${id}`,
         }}
         className={classes.panel}
       >

@@ -43,9 +43,8 @@ const RecordDetail = ({ recordData, getRecords }) => {
   const { id: itemId } = useParams()
   const theme = useTheme()
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
-  const {
-    user: { uid },
-  } = useAuth()
+  const { user } = useAuth()
+  const { uid } = user || {}
 
   const { value: edit, toggleValue } = useToggle(false)
   const [recordInfo, setRecordInfo] = useState({})

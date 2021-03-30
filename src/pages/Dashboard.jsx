@@ -40,7 +40,7 @@ const Dashboard = () => {
             )}
           />
           <Route
-            path="/dashboard/item/:id"
+            path="/dashboard/:user_id/item/:id"
             exact
             render={() => (
               <RecordDetail recordData={data} getRecords={getData} />

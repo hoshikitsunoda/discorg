@@ -1,9 +1,11 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
+
 import { auth } from '../services/firebase'
 import { useStateValue } from '../context/StateProvider'
 import { actionTypes } from '../context/reducer'
+import axios from '../utils/axios-instance'
 
 const useAuth = () => {
   const history = useHistory()
@@ -19,7 +21,7 @@ const useAuth = () => {
   }
 
   const signUp = useCallback(
-    async (email, password) => {
+    async (email, password, data) => {
       try {
         const result = await auth().createUserWithEmailAndPassword(
           email,
@@ -33,7 +35,15 @@ const useAuth = () => {
           'discorg_user_information',
           JSON.stringify(result.user)
         )
-        history.push('/dashboard')
+        // the previous uid is being used to create user
+        if (result.user.uid) {
+          await axios.post(`/user/${result.user.uid}/account.json`, {
+            ...data,
+            email,
+          })
+          toast.success('Success!')
+          history.push('/dashboard')
+        }
       } catch (err) {
         toast.error(err.message)
       }

@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const RecordDetail = ({ recordData, getRecords }) => {
+const RecordDetail = ({ recordData, getRecords, profile }) => {
   const classes = useStyles()
   const { id: itemId } = useParams()
   const theme = useTheme()
@@ -97,7 +97,7 @@ const RecordDetail = ({ recordData, getRecords }) => {
   return (
     <Box pt={4}>
       <Box display="flex" flexDirection="row" justifyContent="space-between">
-        <LinkButton pathName={`/dashboard/${uid}`}>
+        <LinkButton pathName={profile ? `/user/${uid}` : `/dashboard/${uid}`}>
           <ArrowBackIcon fontSize="small" style={{ marginRight: 8 }} />
           <Typography variant="subtitle1" component="p">
             Back to list

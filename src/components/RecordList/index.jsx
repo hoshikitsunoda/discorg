@@ -38,6 +38,7 @@ const RecordList = ({
   setViewOption,
   viewOption,
   getRecords,
+  profile,
 }) => {
   const classes = useStyles()
   const [activeGenre, setActiveGenre] = useState('Collection')
@@ -112,6 +113,7 @@ const RecordList = ({
                       recordData={recordData}
                       uid={uid}
                       handleDelete={handleDelete}
+                      profile={profile}
                     />
                   </Grid>
                 ) : (
@@ -120,6 +122,7 @@ const RecordList = ({
                       recordData={recordData}
                       uid={uid}
                       handleDelete={handleDelete}
+                      profile={profile}
                     />
                   </Grid>
                 )

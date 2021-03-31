@@ -36,6 +36,7 @@ const Profile = () => {
                 setViewOption={setViewOption}
                 viewOption={viewOption}
                 getRecords={getData}
+                profile
               />
             )}
           />
@@ -43,7 +44,7 @@ const Profile = () => {
             path="/user/:user_id/item/:id"
             exact
             render={() => (
-              <RecordDetail recordData={data} getRecords={getData} />
+              <RecordDetail recordData={data} getRecords={getData} profile />
             )}
           />
         </Switch>

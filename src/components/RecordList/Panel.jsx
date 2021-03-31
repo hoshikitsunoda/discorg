@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Panel = ({ recordData, uid, handleDelete }) => {
+const Panel = ({ recordData, uid, handleDelete, profile }) => {
   const classes = useStyles()
   const { value, toggleValue } = useToggle(false)
   const { user } = useAuth()
@@ -61,7 +61,13 @@ const Panel = ({ recordData, uid, handleDelete }) => {
   }
 
   return (
-    <CustomCard url={`/dashboard/${userId}/item/${id}`}>
+    <CustomCard
+      url={
+        profile
+          ? `/user/${userId}/item/${id}`
+          : `/dashboard/${userId}/item/${id}`
+      }
+    >
       <Box p={1}>
         {icon && (
           <Box width={20} mb={1}>

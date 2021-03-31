@@ -14,19 +14,22 @@ const useData = () => {
   const { user } = useAuth()
   const { uid } = user || {}
 
-  const getData = useCallback(async () => {
-    setSubmitting(true)
-    try {
-      const { data } = await axios.get(`/user/${uid}/records.json`)
-      if (uid && data) {
-        setData(data)
+  const getData = useCallback(
+    async (url = `/user/${uid}/records.json`) => {
+      setSubmitting(true)
+      try {
+        const { data } = await axios.get(url)
+        if (uid && data) {
+          setData(data)
+        }
+        setSubmitting(false)
+      } catch (err) {
+        toast.error(err.message)
+        setSubmitting(false)
       }
-      setSubmitting(false)
-    } catch (err) {
-      toast.error(err.message)
-      setSubmitting(false)
-    }
-  }, [uid])
+    },
+    [uid]
+  )
 
   const postData = useCallback(
     async (data) => {

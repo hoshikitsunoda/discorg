@@ -8,8 +8,11 @@ import {
   Box,
   Menu,
   MenuItem,
+  List,
+  ListItem,
 } from '@material-ui/core'
 import AccountCircle from '@material-ui/icons/AccountCircle'
+import { Link } from 'react-router-dom'
 
 import { useAuth } from '../../hooks'
 import Logo from '../../images/discorg.png'
@@ -20,7 +23,20 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none',
   },
   logo: {
-    width: 120,
+    width: 100,
+  },
+  nav: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginLeft: 32,
+
+    '& a': {
+      textDecoration: 'none',
+      fontWeight: 600,
+      color: theme.palette.primary.main,
+    },
   },
 }))
 
@@ -52,6 +68,26 @@ const Header = ({ title }) => {
               justifyContent="space-between"
               width={1}
             >
+              <Box display="flex" alignItems="center" p={2}>
+                {title === 'dashboard' && (
+                  <img src={Logo} alt="discorg logo" className={classes.logo} />
+                )}
+                <List
+                  component="nav"
+                  aria-labelledby="main navigation"
+                  className={classes.nav}
+                >
+                  <Link to={`/dashboard/${uid}`}>
+                    <ListItem button>Dashboard</ListItem>
+                  </Link>
+                  <Link to="/explore">
+                    <ListItem button>Explore</ListItem>
+                  </Link>
+                  <ListItem onClick={signOut} button>
+                    Logout
+                  </ListItem>
+                </List>
+              </Box>
               <Box display="flex" alignItems="center">
                 {!!user && title === 'dashboard' && (
                   <>
@@ -68,11 +104,6 @@ const Header = ({ title }) => {
                     </Box>
                     <Typography variant="body1">{email}</Typography>
                   </>
-                )}
-              </Box>
-              <Box display="flex" alignItems="center" p={2}>
-                {title === 'dashboard' && (
-                  <img src={Logo} alt="discorg logo" className={classes.logo} />
                 )}
               </Box>
             </Box>

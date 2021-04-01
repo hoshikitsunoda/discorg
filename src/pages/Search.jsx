@@ -2,20 +2,23 @@ import { useEffect } from 'react'
 import { makeStyles, Typography } from '@material-ui/core'
 
 import MainLayout from '../hoc/Layout/MainLayout'
-import { useData } from '../hooks'
+import { useData, useAuth } from '../hooks'
 import { CustomCard } from '../components/shared/Card'
 
 const Search = () => {
   const { getData, data } = useData()
+  const {
+    user: { uid },
+  } = useAuth()
 
   useEffect(() => {
     getData(`/user.json`)
   }, [getData])
 
-  const userKeys = Object.keys(data)
+  const userKeys = Object.keys(data).filter((user) => user !== uid)
 
   return (
-    <MainLayout title="search">
+    <MainLayout title="dashboard">
       {userKeys.map((account) => {
         let accountData = data[account].account
         const accountKeys = Object.keys(accountData)

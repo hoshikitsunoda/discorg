@@ -12,6 +12,7 @@ const useAuth = () => {
   const [credentials, setCredentials] = useState({})
   const [state, dispatch] = useStateValue()
   const [user, setUser] = useState('')
+  const [loggedInUser, setLoggedInUser] = useState('')
 
   const handleCredentials = ({ target: { name, value } }) => {
     setCredentials({
@@ -31,7 +32,7 @@ const useAuth = () => {
           type: actionTypes.SET_USER,
           user: result.user,
         })
-        await localStorage.setItem(
+        localStorage.setItem(
           'discorg_user_information',
           JSON.stringify(result.user)
         )
@@ -41,7 +42,7 @@ const useAuth = () => {
             email,
           })
           toast.success('Success!')
-          history.push(`/dashboard/${result.user.uid}`)
+          history.push(`/dashboard`)
         }
       } catch (err) {
         toast.error(err.message)
@@ -58,11 +59,11 @@ const useAuth = () => {
           type: actionTypes.SET_USER,
           user: result.user,
         })
-        await localStorage.setItem(
+        localStorage.setItem(
           'discorg_user_information',
           JSON.stringify(result.user)
         )
-        history.push(`/dashboard/${result.user.uid}`)
+        history.push(`/dashboard`)
       } catch (err) {
         toast.error(err.message)
       }
@@ -84,6 +85,16 @@ const useAuth = () => {
     }
   }, [dispatch, history])
 
+  const getUser = useCallback(() => {
+    try {
+      auth().onAuthStateChanged((user) => {
+        setLoggedInUser(user.uid)
+      })
+    } catch (err) {
+      toast.error(err.message)
+    }
+  }, [])
+
   useEffect(() => {
     const user = localStorage.getItem('discorg_user_information')
     if (user) {
@@ -99,6 +110,8 @@ const useAuth = () => {
     state,
     user,
     credentials,
+    getUser,
+    loggedInUser,
   }
 }
 

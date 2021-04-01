@@ -77,7 +77,7 @@ const Header = ({ title }) => {
                   aria-labelledby="main navigation"
                   className={classes.nav}
                 >
-                  <Link to={`/dashboard/${uid}`}>
+                  <Link to={`/dashboard`}>
                     <ListItem button>Dashboard</ListItem>
                   </Link>
                   <Link to="/explore">

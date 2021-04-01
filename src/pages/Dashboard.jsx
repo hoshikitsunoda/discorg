@@ -27,7 +27,7 @@ const Dashboard = () => {
       <MainLayout title="dashboard">
         <Switch>
           <Route
-            path="/dashboard/:user_id"
+            path="/dashboard"
             exact
             render={() => (
               <RecordList
@@ -40,7 +40,7 @@ const Dashboard = () => {
             )}
           />
           <Route
-            path="/dashboard/:user_id/item/:id"
+            path="/dashboard/item/:id"
             exact
             render={() => (
               <RecordDetail recordData={data} getRecords={getData} />

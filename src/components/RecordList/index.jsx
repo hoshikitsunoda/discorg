@@ -137,9 +137,11 @@ const RecordList = ({
           'No record to show'
         )}
       </Container>
-      <IconButton onClick={toggleValue} className={classes.button}>
-        <AddCircleIcon fontSize="large" className={classes.icon} />
-      </IconButton>
+      {!profile && (
+        <IconButton onClick={toggleValue} className={classes.button}>
+          <AddCircleIcon fontSize="large" className={classes.icon} />
+        </IconButton>
+      )}
     </>
   )
 }

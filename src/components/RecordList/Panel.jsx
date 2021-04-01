@@ -3,7 +3,7 @@ import Skeleton from '@material-ui/lab/Skeleton'
 import CloseIcon from '@material-ui/icons/Close'
 
 import { shortenString, mediaIcon } from '../../utils/helper'
-import { useToggle, useAuth } from '../../hooks'
+import { useToggle } from '../../hooks'
 import { ConfirmModal } from '../shared/Modal'
 import { CustomCard } from '../shared/Card'
 
@@ -38,8 +38,6 @@ const useStyles = makeStyles((theme) => ({
 const Panel = ({ recordData, uid, handleDelete, profile, accountId }) => {
   const classes = useStyles()
   const { value, toggleValue } = useToggle(false)
-  const { user } = useAuth()
-  const { uid: userId } = user || {}
 
   const {
     artist,
@@ -62,11 +60,7 @@ const Panel = ({ recordData, uid, handleDelete, profile, accountId }) => {
 
   return (
     <CustomCard
-      url={
-        profile
-          ? `/user/${accountId}/item/${id}`
-          : `/dashboard/${userId}/item/${id}`
-      }
+      url={profile ? `/user/${accountId}/item/${id}` : `/dashboard/item/${id}`}
     >
       <Box p={1}>
         {icon && (

@@ -120,18 +120,20 @@ const Panel = ({ recordData, uid, handleDelete, profile, accountId }) => {
             <Skeleton variant="rect" width={345} height={200} />
           )}
         </Box>
-        <Box
-          display="flex"
-          flexDirection="row"
-          justifyContent="center"
-          p={1}
-          mt={1}
-        >
-          <CloseIcon
-            style={{ width: 30 }}
-            onClick={(event) => handleClick(event)}
-          />
-        </Box>
+        {!profile && (
+          <Box
+            display="flex"
+            flexDirection="row"
+            justifyContent="center"
+            p={1}
+            mt={1}
+          >
+            <CloseIcon
+              style={{ width: 30 }}
+              onClick={(event) => handleClick(event)}
+            />
+          </Box>
+        )}
       </Box>
       {value && (
         <ConfirmModal

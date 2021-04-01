@@ -103,21 +103,23 @@ const RecordDetail = ({ recordData, getRecords, profile }) => {
             Back to list
           </Typography>
         </LinkButton>
-        <Box p={1}>
-          {edit ? (
-            <CloseIcon
-              onClick={handleClick}
-              fontSize="large"
-              style={{ cursor: 'pointer' }}
-            />
-          ) : (
-            <CreateOutlinedIcon
-              onClick={toggleValue}
-              fontSize="large"
-              style={{ cursor: 'pointer' }}
-            />
-          )}
-        </Box>
+        {!profile && (
+          <Box p={1}>
+            {edit ? (
+              <CloseIcon
+                onClick={handleClick}
+                fontSize="large"
+                style={{ cursor: 'pointer' }}
+              />
+            ) : (
+              <CreateOutlinedIcon
+                onClick={toggleValue}
+                fontSize="large"
+                style={{ cursor: 'pointer' }}
+              />
+            )}
+          </Box>
+        )}
       </Box>
       <Box className={classes.item} px={1}>
         <Box width={1} height={1} my={isSmall ? 4 : 0}>

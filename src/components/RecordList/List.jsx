@@ -113,7 +113,7 @@ const List = ({ recordData, uid, handleDelete, profile, accountId }) => {
             {label}
           </Typography>
         </Grid>
-        <Grid item xs={1} className={classes.flex}>
+        <Grid item xs={profile ? 2 : 1} className={classes.flex}>
           <Typography variant="body2" component="p" style={{ fontSize: 10 }}>
             {`${releaseYear} / ${country}`}
           </Typography>
@@ -130,19 +130,21 @@ const List = ({ recordData, uid, handleDelete, profile, accountId }) => {
             </Box>
           )}
         </Grid>
-        <Grid
-          item
-          xs={1}
-          className={classes.flex}
-          style={{ justifyContent: 'center' }}
-        >
-          <Box>
-            <CloseIcon
-              style={{ width: 30 }}
-              onClick={(event) => handleClick(event)}
-            />
-          </Box>
-        </Grid>
+        {!profile && (
+          <Grid
+            item
+            xs={1}
+            className={classes.flex}
+            style={{ justifyContent: 'center' }}
+          >
+            <Box>
+              <CloseIcon
+                style={{ width: 30 }}
+                onClick={(event) => handleClick(event)}
+              />
+            </Box>
+          </Grid>
+        )}
       </Grid>
       {value && (
         <ConfirmModal

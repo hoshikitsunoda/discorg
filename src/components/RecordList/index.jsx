@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { makeStyles, Container, Grid, IconButton, Box } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
+import { useParams } from 'react-router-dom'
 
 import Panel from './Panel'
 import Filter from './Filter'
@@ -46,6 +47,7 @@ const RecordList = ({
   const [searchTerm, setSearchTerm] = useState('')
   const { deleteData } = useData()
   const { deleteImage } = useImage()
+  const { userId } = useParams()
 
   let dataArray = Object.keys(recordData)
 
@@ -114,6 +116,7 @@ const RecordList = ({
                       uid={uid}
                       handleDelete={handleDelete}
                       profile={profile}
+                      accountId={userId}
                     />
                   </Grid>
                 ) : (
@@ -123,6 +126,7 @@ const RecordList = ({
                       uid={uid}
                       handleDelete={handleDelete}
                       profile={profile}
+                      accountId={userId}
                     />
                   </Grid>
                 )

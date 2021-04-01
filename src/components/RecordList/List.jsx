@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const List = ({ recordData, uid, handleDelete, profile }) => {
+const List = ({ recordData, uid, handleDelete, profile, accountId }) => {
   const classes = useStyles()
   const theme = useTheme()
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
@@ -68,7 +68,7 @@ const List = ({ recordData, uid, handleDelete, profile }) => {
     <CustomCard
       url={
         profile
-          ? `/user/${userId}/item/${id}`
+          ? `/user/${accountId}/item/${id}`
           : `/dashboard/${userId}/item/${id}`
       }
     >

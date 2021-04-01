@@ -2,13 +2,11 @@ import { useEffect } from 'react'
 import { makeStyles, Typography } from '@material-ui/core'
 
 import MainLayout from '../hoc/Layout/MainLayout'
-import { useAuth, useData } from '../hooks'
+import { useData } from '../hooks'
 import { CustomCard } from '../components/shared/Card'
 
 const Search = () => {
   const { getData, data } = useData()
-  const { user } = useAuth()
-  const { uid } = user || {}
 
   useEffect(() => {
     getData(`/user.json`)
@@ -24,7 +22,7 @@ const Search = () => {
         accountData = accountData[accountKeys]
         const { username } = accountData
         return (
-          <CustomCard key={data[account]} url={`user/${uid}`}>
+          <CustomCard key={username} url={`user/${account}`}>
             <Typography variant="body1" component="h4">
               @{username}
             </Typography>

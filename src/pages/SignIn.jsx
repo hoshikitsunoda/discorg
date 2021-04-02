@@ -1,5 +1,7 @@
+import { useEffect } from 'react'
 import { Button, makeStyles, Box, Typography } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import AuthLayout from '../hoc/Layout/AuthLayout'
 import { useAuth } from '../hooks'
@@ -27,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const SignIn = () => {
+const SignIn = ({ location }) => {
   const classes = useStyles()
 
   const { signIn, handleCredentials, credentials } = useAuth()
@@ -38,6 +40,10 @@ const SignIn = () => {
     event.preventDefault()
     signIn(email, password)
   }
+
+  useEffect(() => {
+    if (location.state) toast.error('You must sign in to view this page')
+  }, [location])
 
   return (
     <AuthLayout title="Sign In">

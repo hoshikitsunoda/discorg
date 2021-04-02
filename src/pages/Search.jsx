@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { makeStyles, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 
 import MainLayout from '../hoc/Layout/MainLayout'
 import { useData, useAuth } from '../hooks'

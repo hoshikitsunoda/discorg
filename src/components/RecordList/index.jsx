@@ -11,6 +11,7 @@ import List from './List'
 import ViewSwitch from '../shared/ViewSwitch'
 import { useData, useImage } from '../../hooks'
 import { sortItems } from '../../utils/helper'
+import User from '../User'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,6 +84,7 @@ const RecordList = ({
   return (
     <>
       <Container maxWidth="md" className={classes.root}>
+        <User />
         <Box
           display="flex"
           flexDirection="row"

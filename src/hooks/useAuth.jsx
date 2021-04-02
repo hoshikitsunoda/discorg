@@ -28,14 +28,16 @@ const useAuth = () => {
           email,
           password
         )
-        dispatch({
-          type: actionTypes.SET_USER,
-          user: result.user,
-        })
-        localStorage.setItem(
-          'discorg_user_information',
-          JSON.stringify(result.user)
-        )
+        if (result && data) {
+          const user = auth().currentUser
+          user.updateProfile({
+            displayName: data.username,
+          })
+          localStorage.setItem(
+            'discorg_user_information',
+            JSON.stringify(result.user)
+          )
+        }
         if (result.user.uid) {
           await axios.post(`/user/${result.user.uid}/account.json`, {
             ...data,
@@ -48,7 +50,7 @@ const useAuth = () => {
         toast.error(err.message)
       }
     },
-    [dispatch, history]
+    [history]
   )
 
   const signIn = useCallback(

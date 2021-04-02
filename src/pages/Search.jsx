@@ -20,10 +20,8 @@ const Search = () => {
   return (
     <MainLayout title="dashboard">
       {userKeys.map((account) => {
-        let accountData = data[account].account
-        const accountKeys = Object.keys(accountData)
-        accountData = accountData[accountKeys]
-        const { username } = accountData
+        const accountData = data[account].account
+        const { username } = accountData || {}
         return (
           <CustomCard key={username} url={`user/${account}`}>
             <Typography variant="body1" component="h4">

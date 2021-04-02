@@ -39,7 +39,7 @@ const useAuth = () => {
           )
         }
         if (result.user.uid) {
-          await axios.post(`/user/${result.user.uid}/account.json`, {
+          await axios.patch(`/user/${result.user.uid}/account.json`, {
             ...data,
             email,
           })

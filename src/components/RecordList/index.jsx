@@ -84,7 +84,7 @@ const RecordList = ({
   return (
     <>
       <Container maxWidth="md" className={classes.root}>
-        <User />
+        <User userId={userId} />
         <Box
           display="flex"
           flexDirection="row"

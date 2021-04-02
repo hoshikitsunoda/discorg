@@ -17,7 +17,7 @@ function App() {
       <Switch>
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />
-        <ProtectedRoute path="/dashboard" exact component={Dashboard} />
+        <ProtectedRoute path="/dashboard" component={Dashboard} />
         <Route path="/explore" component={Search} />
         <Route path="/user" component={Profile} />
         <Route path="/" exact component={Landing} />

@@ -49,6 +49,7 @@ const Profile = () => {
                 viewOption={viewOption}
                 getRecords={getData}
                 profile
+                userId={userId}
               />
             )}
           />

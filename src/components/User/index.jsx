@@ -1,7 +1,7 @@
 import { makeStyles, Grid, Typography } from '@material-ui/core'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 
-import { useSingleUserData } from '../../hooks'
+import { useSingleUserData, useAllUsersData } from '../../hooks'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -17,14 +17,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Profile = () => {
+const User = ({ userId }) => {
   const classes = useStyles()
   const {
     currentUser: { account = {} },
   } = useSingleUserData()
+  const { allUsers = {} } = useAllUsersData()
+  let userAccount = account
 
-  const accountKey = Object.keys(account)
-  const userAccount = account[accountKey]
+  if (userId) {
+    const userKey = Object.keys(allUsers).find((user) => user === userId)
+    userAccount = allUsers[userKey]?.account
+  }
+
   const { username } = userAccount || {}
 
   return (
@@ -42,4 +47,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default User

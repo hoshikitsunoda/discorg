@@ -10,13 +10,15 @@ import {
   MenuItem,
   List,
   ListItem,
+  Avatar,
 } from '@material-ui/core'
-import AccountCircle from '@material-ui/icons/AccountCircle'
 import { Link } from 'react-router-dom'
+import clsx from 'clsx'
 
 import { useAuth } from '../../hooks'
 import Logo from '../../images/discorg.png'
 import { MultiColorBorder } from '../shared/Border'
+import AvatarPlaceholder from '../../images/avatar-placeholder.svg'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +39,10 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: 600,
       color: theme.palette.primary.main,
     },
+  },
+  avatar: {
+    border: `1px solid ${theme.palette.primary.main}`,
+    padding: theme.spacing(0.5),
   },
 }))
 
@@ -99,7 +105,11 @@ const Header = ({ title }) => {
                         color="primary"
                         onClick={handleClick}
                       >
-                        <AccountCircle />
+                        <Avatar
+                          alt="avatar"
+                          src={AvatarPlaceholder}
+                          className={clsx(classes.avatar)}
+                        />
                       </IconButton>
                     </Box>
                     <Typography variant="body1">{email}</Typography>

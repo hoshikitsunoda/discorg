@@ -43,6 +43,8 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     border: `1px solid ${theme.palette.primary.main}`,
     padding: theme.spacing(0.5),
+    width: 32,
+    height: 32,
   },
 }))
 

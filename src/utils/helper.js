@@ -75,3 +75,16 @@ export const sortItems = (sort, array, data) => {
 
   return array
 }
+
+export const countObjectKeys = (obj, target) =>
+  obj.reduce((acc, curr) => {
+    let count = 1
+    const key = target ? curr[target] : curr
+    if (key in acc) {
+      count = count + 1
+    }
+    return {
+      ...acc,
+      [key]: count,
+    }
+  }, {})

@@ -12,6 +12,7 @@ const useAllUsersData = () => {
   } = useAuth()
 
   useEffect(() => {
+    setSubmitting(true)
     let isMounted = true
     try {
       axios.get(`/user.json`).then(({ data }) => {

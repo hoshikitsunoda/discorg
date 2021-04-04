@@ -126,7 +126,7 @@ const User = ({ userId }) => {
         className={classes.root}
       >
         <Grid item container xs={12} className={classes.userInfo}>
-          <Grid item xs={12} sm={6} className={classes.avatarWrapper}>
+          <Grid item xs={4} sm={6} className={classes.avatarWrapper}>
             <Box mb={2}>
               <Avatar
                 alt={firstName}
@@ -138,7 +138,7 @@ const User = ({ userId }) => {
               @{username}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={8} sm={6}>
             <Stats recordData={recordData} topGenre={topGenre} />
             <Grid container spacing={1} style={{ marginTop: 8 }}>
               <Grid item xs={6}>

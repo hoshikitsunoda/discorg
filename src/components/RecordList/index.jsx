@@ -15,7 +15,7 @@ import User from '../User'
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: 0,
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(1),
   },
   button: {
     position: 'fixed',

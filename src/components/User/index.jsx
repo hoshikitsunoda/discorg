@@ -28,12 +28,20 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 660,
     margin: '0 auto',
+
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: 'auto',
+      margin: -16,
+    },
   },
-  avatarWrapper: {
+  userInfo: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
+
+    [theme.breakpoints.down('sm')]: {
+      paddingBottom: '0 !important',
+    },
   },
   textWrapper: {
     display: 'flex',
@@ -61,6 +69,12 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     width: '100%',
+  },
+  avatarWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    marginBottom: 16,
   },
 }))
 
@@ -115,8 +129,8 @@ const User = ({ userId }) => {
         justify="space-between"
         className={classes.root}
       >
-        <Grid item container xs={12} className={classes.avatarWrapper}>
-          <Grid item xs={12} sm={6}>
+        <Grid item container xs={12} className={classes.userInfo}>
+          <Grid item xs={12} sm={6} className={classes.avatarWrapper}>
             <Box mb={2}>
               <Avatar
                 alt={firstName}
@@ -131,7 +145,7 @@ const User = ({ userId }) => {
           <Grid item xs={12} sm={6}>
             <Stats recordData={recordData} topGenre={topGenre} />
             <Grid container spacing={1} style={{ marginTop: 8 }}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={6}>
                 <Button
                   variant="contained"
                   color="primary"
@@ -140,7 +154,7 @@ const User = ({ userId }) => {
                   Follow
                 </Button>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={6}>
                 <Button
                   variant="outlined"
                   color="primary"

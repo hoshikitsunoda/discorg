@@ -23,15 +23,15 @@ const Stats = ({ recordData, topGenre }) => {
   return (
     <>
       <Grid container spacing={1}>
-        <Grid item xs={12} sm={4} align="center">
+        <Grid item xs={4} align="center">
           <Typography className={classes.stats}>{recordData.length}</Typography>
           <Typography>Items</Typography>
         </Grid>
-        <Grid item xs={12} sm={4} align="center">
+        <Grid item xs={4} align="center">
           <Typography className={classes.stats}>10k</Typography>
           <Typography>Followers</Typography>
         </Grid>
-        <Grid item xs={12} sm={4} align="center">
+        <Grid item xs={4} align="center">
           <Typography className={classes.stats}>968</Typography>
           <Typography>Following</Typography>
         </Grid>

@@ -32,7 +32,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'row',
-    marginLeft: 32,
+    marginLeft: theme.spacing(4),
+
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
 
     '& a': {
       textDecoration: 'none',

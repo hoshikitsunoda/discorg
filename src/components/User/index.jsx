@@ -25,12 +25,15 @@ import { countObjectKeys } from '../../utils/helper'
 import Stats from './Stats'
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    maxWidth: 660,
+    margin: '0 auto',
+  },
   avatarWrapper: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'column',
+    flexDirection: 'row',
   },
   textWrapper: {
     display: 'flex',
@@ -50,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
   divider: {
     width: '100%',
-    margin: `${theme.spacing(7)}px 0`,
+    margin: `${theme.spacing(6)}px 0`,
   },
   iconWrapper: {
     textAlign: 'right',
@@ -112,19 +115,44 @@ const User = ({ userId }) => {
         justify="space-between"
         className={classes.root}
       >
-        <Grid item xs={12} sm={2} className={classes.avatarWrapper}>
-          <Box mb={2}>
-            <Avatar
-              alt={firstName}
-              src={AvatarPlaceholder}
-              className={clsx(classes.avatar, classes.large)}
-            />
-          </Box>
-          <Typography variant="body1" component="p">
-            @{username}
-          </Typography>
+        <Grid item container xs={12} className={classes.avatarWrapper}>
+          <Grid item xs={12} sm={6}>
+            <Box mb={2}>
+              <Avatar
+                alt={firstName}
+                src={AvatarPlaceholder}
+                className={clsx(classes.avatar, classes.large)}
+              />
+            </Box>
+            <Typography variant="body1" component="p">
+              @{username}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Stats recordData={recordData} topGenre={topGenre} />
+            <Grid container spacing={1}>
+              <Grid item xs={12} sm={6}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                >
+                  Follow
+                </Button>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className={classes.button}
+                >
+                  Message
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={6} className={classes.textWrapper}>
+        <Grid item xs={12} className={classes.textWrapper}>
           <div>
             {edit ? (
               <Edit user={userAccount} />
@@ -140,31 +168,8 @@ const User = ({ userId }) => {
             )}
           </div>
         </Grid>
-        <Grid item xs={12} sm={4}>
-          <Stats recordData={recordData} topGenre={topGenre} />
-          <Grid container spacing={1}>
-            <Grid item xs={12} sm={6}>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-              >
-                Follow
-              </Button>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Button
-                variant="outlined"
-                color="primary"
-                className={classes.button}
-              >
-                Message
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Divider className={classes.divider} />
       </Grid>
+      <Divider className={classes.divider} />
     </Box>
   )
 }

@@ -10,6 +10,12 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 12,
     },
   },
+  topGenre: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
 }))
 
 const Stats = ({ recordData, topGenre }) => {
@@ -17,25 +23,24 @@ const Stats = ({ recordData, topGenre }) => {
   return (
     <>
       <Grid container spacing={1}>
-        <Grid item xs={12}>
-          <Typography className={classes.stats}>
-            <span>Followers: </span>10k
-          </Typography>
+        <Grid item xs={12} sm={4} align="center">
+          <Typography className={classes.stats}>{recordData.length}</Typography>
+          <Typography>Items</Typography>
         </Grid>
-        <Grid item xs={12}>
-          <Typography className={classes.stats}>
-            <span>Following: </span>968
-          </Typography>
+        <Grid item xs={12} sm={4} align="center">
+          <Typography className={classes.stats}>10k</Typography>
+          <Typography>Followers</Typography>
         </Grid>
-        <Grid item xs={12}>
-          <Typography className={classes.stats}>
-            <span>Collections:</span> {recordData.length}
-          </Typography>
+        <Grid item xs={12} sm={4} align="center">
+          <Typography className={classes.stats}>968</Typography>
+          <Typography>Following</Typography>
         </Grid>
-        <Grid item xs={12}>
-          <Typography className={classes.stats} variant="body1">
-            Top genre:
-          </Typography>
+        <Grid item xs={12} className={classes.topGenre}>
+          <Box mr={1}>
+            <Typography className={classes.stats} variant="body1">
+              Top genre:
+            </Typography>
+          </Box>
           <Box py={1}>
             <Chip label={topGenre} />
           </Box>

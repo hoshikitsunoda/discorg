@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Panel = ({ recordData, uid, handleDelete, profile, accountId }) => {
+const Panel = ({ recordData, uid, handleDelete, userId }) => {
   const classes = useStyles()
   const { value, toggleValue } = useToggle(false)
 
@@ -60,7 +60,7 @@ const Panel = ({ recordData, uid, handleDelete, profile, accountId }) => {
 
   return (
     <CustomCard
-      url={profile ? `/user/${accountId}/item/${id}` : `/dashboard/item/${id}`}
+      url={userId ? `/user/${userId}/item/${id}` : `/dashboard/item/${id}`}
     >
       <Box p={1}>
         {icon && (
@@ -114,7 +114,7 @@ const Panel = ({ recordData, uid, handleDelete, profile, accountId }) => {
             <Skeleton variant="rect" width={345} height={200} />
           )}
         </Box>
-        {!profile && (
+        {!userId && (
           <Box
             display="flex"
             flexDirection="row"

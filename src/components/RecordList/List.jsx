@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const List = ({ recordData, uid, handleDelete, profile, accountId }) => {
+const List = ({ recordData, uid, handleDelete, userId }) => {
   const classes = useStyles()
   const theme = useTheme()
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
@@ -64,7 +64,7 @@ const List = ({ recordData, uid, handleDelete, profile, accountId }) => {
 
   return (
     <CustomCard
-      url={profile ? `/user/${accountId}/item/${id}` : `/dashboard/item/${id}`}
+      url={userId ? `/user/${userId}/item/${id}` : `/dashboard/item/${id}`}
     >
       <Grid container spacing={2}>
         {!isSmall && (
@@ -107,7 +107,7 @@ const List = ({ recordData, uid, handleDelete, profile, accountId }) => {
             {label}
           </Typography>
         </Grid>
-        <Grid item xs={profile ? 2 : 1} className={classes.flex}>
+        <Grid item xs={userId ? 2 : 1} className={classes.flex}>
           <Typography variant="body2" component="p" style={{ fontSize: 10 }}>
             {`${releaseYear} / ${country}`}
           </Typography>
@@ -124,7 +124,7 @@ const List = ({ recordData, uid, handleDelete, profile, accountId }) => {
             </Box>
           )}
         </Grid>
-        {!profile && (
+        {!userId && (
           <Grid
             item
             xs={1}

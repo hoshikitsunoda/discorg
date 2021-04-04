@@ -48,7 +48,6 @@ const Profile = () => {
                 setViewOption={setViewOption}
                 viewOption={viewOption}
                 getRecords={getData}
-                profile
                 userId={userId}
               />
             )}
@@ -56,7 +55,11 @@ const Profile = () => {
           <Route
             path="/user/:userId/item/:id"
             render={() => (
-              <RecordDetail recordData={data} getRecords={getData} profile />
+              <RecordDetail
+                recordData={data}
+                getRecords={getData}
+                userId={userId}
+              />
             )}
           />
         </Switch>

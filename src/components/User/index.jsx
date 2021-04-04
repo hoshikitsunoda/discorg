@@ -7,7 +7,6 @@ import {
   Box,
   IconButton,
   Button,
-  Chip,
 } from '@material-ui/core'
 import clsx from 'clsx'
 import CloseIcon from '@material-ui/icons/Close'
@@ -18,10 +17,12 @@ import {
   useAllUsersData,
   useToggle,
   useData,
+  useAuth,
 } from '../../hooks'
 import AvatarPlaceholder from '../../images/avatar-placeholder.svg'
 import Edit from './Edit'
 import { countObjectKeys } from '../../utils/helper'
+import Stats from './Stats'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -53,28 +54,24 @@ const useStyles = makeStyles((theme) => ({
   },
   iconWrapper: {
     textAlign: 'right',
-    marginTop: ({ profile }) => (profile ? 64 : 16),
+    marginTop: ({ userId }) => (userId ? 64 : 16),
   },
-  button: {},
-  stats: {
-    fontWeight: 600,
-
-    '& span': {
-      fontWeight: 400,
-      color: '#888',
-      fontSize: 12,
-    },
+  button: {
+    width: '100%',
   },
 }))
 
-const User = ({ userId, profile }) => {
-  const classes = useStyles({ profile })
+const User = ({ userId }) => {
+  const classes = useStyles({ userId })
   const {
     currentUser: { account = {} },
   } = useSingleUserData()
   const { allUsers = {} } = useAllUsersData()
   const { value: edit, toggleValue } = useToggle(false)
-  const { data } = useData(userId)
+  const { user } = useAuth()
+  const { uid } = user || {}
+
+  const { data } = useData(userId ? userId : uid)
 
   let userAccount = account
   if (userId) {
@@ -99,7 +96,7 @@ const User = ({ userId, profile }) => {
   return (
     <Box>
       <Box className={classes.iconWrapper}>
-        {!profile && (
+        {!userId && (
           <IconButton
             color="primary"
             aria-label="toggle edit"
@@ -115,7 +112,7 @@ const User = ({ userId, profile }) => {
         justify="space-between"
         className={classes.root}
       >
-        <Grid item xs={12} sm={3} className={classes.avatarWrapper}>
+        <Grid item xs={12} sm={2} className={classes.avatarWrapper}>
           <Box mb={2}>
             <Avatar
               alt={firstName}
@@ -143,39 +140,28 @@ const User = ({ userId, profile }) => {
             )}
           </div>
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={4}>
+          <Stats recordData={recordData} topGenre={topGenre} />
           <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <Typography className={classes.stats}>
-                <span>Followers: </span>10k
-              </Typography>
+            <Grid item xs={12} sm={6}>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+              >
+                Follow
+              </Button>
             </Grid>
-            <Grid item xs={12}>
-              <Typography className={classes.stats}>
-                <span>Following: </span>968
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography className={classes.stats}>
-                <span>Collections:</span> {recordData.length}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography className={classes.stats} variant="body1">
-                Top genre:
-              </Typography>
-              <Box py={1}>
-                <Chip label={topGenre} />
-              </Box>
+            <Grid item xs={12} sm={6}>
+              <Button
+                variant="outlined"
+                color="primary"
+                className={classes.button}
+              >
+                Message
+              </Button>
             </Grid>
           </Grid>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-          >
-            Follow
-          </Button>
         </Grid>
         <Divider className={classes.divider} />
       </Grid>

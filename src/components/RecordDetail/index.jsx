@@ -20,7 +20,7 @@ import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined'
 import { LinkButton } from '../shared/Button'
 import Edit from './Edit'
 import { ConfirmModal } from '../shared/Modal'
-import { useToggle, useAuth } from '../../hooks'
+import { useToggle } from '../../hooks'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,13 +38,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const RecordDetail = ({ recordData, getRecords, profile }) => {
+const RecordDetail = ({ recordData, getRecords, userId }) => {
   const classes = useStyles()
   const { id: itemId } = useParams()
   const theme = useTheme()
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
-  const { user } = useAuth()
-  const { uid } = user || {}
 
   const { value: edit, toggleValue } = useToggle(false)
   const [recordInfo, setRecordInfo] = useState({})
@@ -97,13 +95,13 @@ const RecordDetail = ({ recordData, getRecords, profile }) => {
   return (
     <Box pt={4}>
       <Box display="flex" flexDirection="row" justifyContent="space-between">
-        <LinkButton pathName={profile ? `/user/${uid}` : `/dashboard/${uid}`}>
+        <LinkButton pathName={userId ? `/user/${userId}` : `/dashboard`}>
           <ArrowBackIcon fontSize="small" style={{ marginRight: 8 }} />
           <Typography variant="subtitle1" component="p">
             Back to list
           </Typography>
         </LinkButton>
-        {!profile && (
+        {!userId && (
           <Box p={1}>
             {edit ? (
               <CloseIcon

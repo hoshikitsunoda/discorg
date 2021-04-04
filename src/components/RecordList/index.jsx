@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { makeStyles, Container, Grid, IconButton, Box } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
-import { useParams } from 'react-router-dom'
 
 import Panel from './Panel'
 import Filter from './Filter'
@@ -40,7 +39,7 @@ const RecordList = ({
   setViewOption,
   viewOption,
   getRecords,
-  profile,
+  userId,
 }) => {
   const classes = useStyles()
   const [activeGenre, setActiveGenre] = useState('Collection')
@@ -48,7 +47,6 @@ const RecordList = ({
   const [searchTerm, setSearchTerm] = useState('')
   const { deleteData } = useData()
   const { deleteImage } = useImage()
-  const { userId } = useParams()
 
   let dataArray = Object.keys(recordData)
 
@@ -84,7 +82,7 @@ const RecordList = ({
   return (
     <>
       <Container maxWidth="md" className={classes.root}>
-        <User userId={userId} profile={profile} />
+        <User userId={userId} />
         <Box
           display="flex"
           flexDirection="row"
@@ -117,7 +115,7 @@ const RecordList = ({
                       recordData={recordData}
                       uid={uid}
                       handleDelete={handleDelete}
-                      profile={profile}
+                      userId={userId}
                       accountId={userId}
                     />
                   </Grid>
@@ -127,7 +125,7 @@ const RecordList = ({
                       recordData={recordData}
                       uid={uid}
                       handleDelete={handleDelete}
-                      profile={profile}
+                      userId={userId}
                       accountId={userId}
                     />
                   </Grid>
@@ -139,7 +137,7 @@ const RecordList = ({
           'No record to show'
         )}
       </Container>
-      {!profile && (
+      {!userId && (
         <IconButton onClick={toggleValue} className={classes.button}>
           <AddCircleIcon fontSize="large" className={classes.icon} />
         </IconButton>

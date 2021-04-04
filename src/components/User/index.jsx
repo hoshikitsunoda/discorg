@@ -53,11 +53,11 @@ const useStyles = makeStyles((theme) => ({
   },
   divider: {
     width: '100%',
-    margin: `${theme.spacing(6)}px 0`,
+    margin: `${theme.spacing(3)}px 0`,
   },
   iconWrapper: {
     textAlign: 'right',
-    marginTop: ({ userId }) => (userId ? 64 : 16),
+    marginTop: ({ userId }) => (userId ? 32 : 0),
   },
   button: {
     width: '100%',
@@ -130,7 +130,7 @@ const User = ({ userId }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Stats recordData={recordData} topGenre={topGenre} />
-            <Grid container spacing={1}>
+            <Grid container spacing={1} style={{ marginTop: 8 }}>
               <Grid item xs={12} sm={6}>
                 <Button
                   variant="contained"

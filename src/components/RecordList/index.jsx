@@ -14,6 +14,7 @@ import User from '../User'
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    padding: 0,
     marginTop: theme.spacing(4),
   },
   button: {

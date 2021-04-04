@@ -30,18 +30,14 @@ const useStyles = makeStyles((theme) => ({
     margin: '0 auto',
 
     [theme.breakpoints.down('sm')]: {
-      maxWidth: 'auto',
-      margin: -16,
+      maxWidth: 'none',
+      margin: -8,
     },
   },
   userInfo: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-
-    [theme.breakpoints.down('sm')]: {
-      paddingBottom: '0 !important',
-    },
   },
   textWrapper: {
     display: 'flex',
@@ -125,7 +121,7 @@ const User = ({ userId }) => {
       </Box>
       <Grid
         container
-        spacing={4}
+        spacing={2}
         justify="space-between"
         className={classes.root}
       >

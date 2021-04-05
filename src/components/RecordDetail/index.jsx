@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const RecordDetail = ({ recordData, getRecords }) => {
+const RecordDetail = ({ recordData, getRecords, userId }) => {
   const classes = useStyles()
   const { id: itemId } = useParams()
   const theme = useTheme()
@@ -95,27 +95,29 @@ const RecordDetail = ({ recordData, getRecords }) => {
   return (
     <Box pt={4}>
       <Box display="flex" flexDirection="row" justifyContent="space-between">
-        <LinkButton pathName="/dashboard">
+        <LinkButton pathName={userId ? `/user/${userId}` : `/dashboard`}>
           <ArrowBackIcon fontSize="small" style={{ marginRight: 8 }} />
           <Typography variant="subtitle1" component="p">
             Back to list
           </Typography>
         </LinkButton>
-        <Box p={1}>
-          {edit ? (
-            <CloseIcon
-              onClick={handleClick}
-              fontSize="large"
-              style={{ cursor: 'pointer' }}
-            />
-          ) : (
-            <CreateOutlinedIcon
-              onClick={toggleValue}
-              fontSize="large"
-              style={{ cursor: 'pointer' }}
-            />
-          )}
-        </Box>
+        {!userId && (
+          <Box p={1}>
+            {edit ? (
+              <CloseIcon
+                onClick={handleClick}
+                fontSize="large"
+                style={{ cursor: 'pointer' }}
+              />
+            ) : (
+              <CreateOutlinedIcon
+                onClick={toggleValue}
+                fontSize="large"
+                style={{ cursor: 'pointer' }}
+              />
+            )}
+          </Box>
+        )}
       </Box>
       <Box className={classes.item} px={1}>
         <Box width={1} height={1} my={isSmall ? 4 : 0}>

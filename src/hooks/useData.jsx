@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { toast } from 'react-toastify'
 
 import axios from '../utils/axios-instance'
@@ -6,7 +6,7 @@ import { db } from '../services/firebase'
 import { flatten } from '../utils/helper'
 import { useAuth } from '.'
 
-const useData = () => {
+const useData = (id) => {
   const [submitting, setSubmitting] = useState(false)
   const [close, setClose] = useState(false)
   const [error, setError] = useState('')
@@ -14,19 +14,41 @@ const useData = () => {
   const { user } = useAuth()
   const { uid } = user || {}
 
-  const getData = useCallback(async () => {
+  useEffect(() => {
     setSubmitting(true)
+    let isMounted = true
     try {
-      const { data } = await axios.get(`/user/${uid}/records.json`)
-      if (uid && data) {
-        setData(data)
-      }
+      axios.get(`/user/${id}/records.json`).then(({ data }) => {
+        if (data && isMounted) setData(data)
+      })
       setSubmitting(false)
     } catch (err) {
       toast.error(err.message)
       setSubmitting(false)
     }
-  }, [uid])
+
+    return () => {
+      isMounted = false
+    }
+  }, [id])
+
+  const getData = useCallback(
+    async (url = `/user/${uid}/records.json`) => {
+      setSubmitting(true)
+      try {
+        const { data } = await axios.get(url)
+
+        if (data) {
+          setData(data)
+        }
+        setSubmitting(false)
+      } catch (err) {
+        toast.error(err.message)
+        setSubmitting(false)
+      }
+    },
+    [uid]
+  )
 
   const postData = useCallback(
     async (data) => {

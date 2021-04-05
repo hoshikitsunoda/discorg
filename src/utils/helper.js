@@ -36,9 +36,11 @@ export const mediaIcon = (format) => {
   return icon
 }
 
-export const flatten = (json, id, newObj, uid) => {
+export const flatten = (json, id, newObj, uid, user = false) => {
   Object.keys(json).forEach((key) => {
-    const path = `/user/${uid}/records/${id}/${key}`
+    const path = user
+      ? `/user/${uid}/account/${key}`
+      : `/user/${uid}/records/${id}/${key}`
     if (typeof json[key] === 'object') {
       flatten(json[key], path)
     } else {
@@ -73,3 +75,16 @@ export const sortItems = (sort, array, data) => {
 
   return array
 }
+
+export const countObjectKeys = (obj, target) =>
+  obj.reduce((acc, curr) => {
+    let count = 1
+    const key = target ? curr[target] : curr
+    if (key in acc) {
+      count = count + 1
+    }
+    return {
+      ...acc,
+      [key]: count,
+    }
+  }, {})

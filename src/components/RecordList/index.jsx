@@ -10,10 +10,12 @@ import List from './List'
 import ViewSwitch from '../shared/ViewSwitch'
 import { useData, useImage } from '../../hooks'
 import { sortItems } from '../../utils/helper'
+import User from '../User'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.spacing(4),
+    padding: 0,
+    marginTop: theme.spacing(1),
   },
   button: {
     position: 'fixed',
@@ -38,6 +40,7 @@ const RecordList = ({
   setViewOption,
   viewOption,
   getRecords,
+  userId,
 }) => {
   const classes = useStyles()
   const [activeGenre, setActiveGenre] = useState('Collection')
@@ -80,6 +83,7 @@ const RecordList = ({
   return (
     <>
       <Container maxWidth="md" className={classes.root}>
+        <User userId={userId} />
         <Box
           display="flex"
           flexDirection="row"
@@ -112,6 +116,8 @@ const RecordList = ({
                       recordData={recordData}
                       uid={uid}
                       handleDelete={handleDelete}
+                      userId={userId}
+                      accountId={userId}
                     />
                   </Grid>
                 ) : (
@@ -120,6 +126,8 @@ const RecordList = ({
                       recordData={recordData}
                       uid={uid}
                       handleDelete={handleDelete}
+                      userId={userId}
+                      accountId={userId}
                     />
                   </Grid>
                 )
@@ -130,9 +138,11 @@ const RecordList = ({
           'No record to show'
         )}
       </Container>
-      <IconButton onClick={toggleValue} className={classes.button}>
-        <AddCircleIcon fontSize="large" className={classes.icon} />
-      </IconButton>
+      {!userId && (
+        <IconButton onClick={toggleValue} className={classes.button}>
+          <AddCircleIcon fontSize="large" className={classes.icon} />
+        </IconButton>
+      )}
     </>
   )
 }

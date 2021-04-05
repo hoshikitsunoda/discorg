@@ -1,15 +1,18 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
+
 import { auth } from '../services/firebase'
 import { useStateValue } from '../context/StateProvider'
 import { actionTypes } from '../context/reducer'
+import axios from '../utils/axios-instance'
 
 const useAuth = () => {
   const history = useHistory()
   const [credentials, setCredentials] = useState({})
   const [state, dispatch] = useStateValue()
   const [user, setUser] = useState('')
+  const [loggedInUser, setLoggedInUser] = useState('')
 
   const handleCredentials = ({ target: { name, value } }) => {
     setCredentials({
@@ -19,26 +22,35 @@ const useAuth = () => {
   }
 
   const signUp = useCallback(
-    async (email, password) => {
+    async (email, password, data) => {
       try {
         const result = await auth().createUserWithEmailAndPassword(
           email,
           password
         )
-        dispatch({
-          type: actionTypes.SET_USER,
-          user: result.user,
-        })
-        await localStorage.setItem(
-          'discorg_user_information',
-          JSON.stringify(result.user)
-        )
-        history.push('/dashboard')
+        if (result && data) {
+          const user = auth().currentUser
+          user.updateProfile({
+            displayName: data.username,
+          })
+          localStorage.setItem(
+            'discorg_user_information',
+            JSON.stringify(result.user)
+          )
+        }
+        if (result.user.uid) {
+          await axios.patch(`/user/${result.user.uid}/account.json`, {
+            ...data,
+            email,
+          })
+          toast.success('Success!')
+          history.push(`/dashboard`)
+        }
       } catch (err) {
         toast.error(err.message)
       }
     },
-    [dispatch, history]
+    [history]
   )
 
   const signIn = useCallback(
@@ -49,11 +61,11 @@ const useAuth = () => {
           type: actionTypes.SET_USER,
           user: result.user,
         })
-        await localStorage.setItem(
+        localStorage.setItem(
           'discorg_user_information',
           JSON.stringify(result.user)
         )
-        history.push('/dashboard')
+        history.push(`/dashboard`)
       } catch (err) {
         toast.error(err.message)
       }
@@ -68,11 +80,22 @@ const useAuth = () => {
         type: actionTypes.SET_USER,
         user: null,
       })
+      localStorage.removeItem('discorg_user_information')
       history.push('/signin')
     } catch (err) {
       toast.error(err.message)
     }
   }, [dispatch, history])
+
+  const getUser = useCallback(() => {
+    try {
+      auth().onAuthStateChanged((user) => {
+        setLoggedInUser(user.uid)
+      })
+    } catch (err) {
+      toast.error(err.message)
+    }
+  }, [])
 
   useEffect(() => {
     const user = localStorage.getItem('discorg_user_information')
@@ -89,6 +112,8 @@ const useAuth = () => {
     state,
     user,
     credentials,
+    getUser,
+    loggedInUser,
   }
 }
 

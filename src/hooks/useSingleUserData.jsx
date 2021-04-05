@@ -57,6 +57,7 @@ const useUserData = () => {
     currentUser,
     updateUserData,
     handleEditUserInfo,
+    updatedInput,
   }
 }
 

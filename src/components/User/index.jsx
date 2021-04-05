@@ -69,6 +69,10 @@ const User = ({ userId }) => {
   const classes = useStyles({ userId })
   const {
     currentUser: { account = {} },
+    updatedInput,
+    updateUserData,
+    submitting,
+    handleEditUserInfo,
   } = useSingleUserData()
   const { allUsers = {} } = useAllUsersData()
   const { value: edit, toggleValue } = useToggle(false)
@@ -96,7 +100,7 @@ const User = ({ userId }) => {
     (acc, curr) => (genreCount[acc] > genreCount[curr] ? acc : curr),
     ''
   )
-
+  console.log(updatedInput)
   return (
     <Box>
       <Box className={classes.iconWrapper}>
@@ -156,14 +160,21 @@ const User = ({ userId }) => {
         <Grid item xs={12} className={classes.textWrapper}>
           <div>
             {edit ? (
-              <Edit user={userAccount} />
+              <Edit
+                user={userAccount}
+                updateUserData={updateUserData}
+                handleEditUserInfo={handleEditUserInfo}
+                submitting={submitting}
+                exitEdit={toggleValue}
+              />
             ) : (
               <>
                 <Typography variant="h6" component="h6">
-                  {firstName} {lastName}
+                  {updatedInput.firstName || firstName}{' '}
+                  {updatedInput.lastName || lastName}
                 </Typography>
                 <Typography variant="body1" component="p">
-                  {bio}
+                  {updatedInput?.bio || bio}
                 </Typography>
               </>
             )}

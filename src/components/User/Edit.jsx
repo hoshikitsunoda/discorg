@@ -1,7 +1,6 @@
 import { makeStyles, Box, CircularProgress, Button } from '@material-ui/core'
 
 import { FormInput } from '../../components/shared/Input'
-import { useSingleUserData } from '../../hooks'
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -18,11 +17,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Edit = ({ user }) => {
+const Edit = ({
+  user,
+  updateUserData,
+  submitting,
+  handleEditUserInfo,
+  exitEdit,
+}) => {
   const classes = useStyles()
-  const { updateUserData, submitting, handleEditUserInfo } = useSingleUserData()
 
   const { firstName, lastName, bio } = user || {}
+
+  const handleSubmit = async () => {
+    await updateUserData()
+    exitEdit()
+  }
 
   return (
     <Box>
@@ -60,7 +69,7 @@ const Edit = ({ user }) => {
         onChange={handleEditUserInfo}
         defaultValue={bio}
       />
-      <Button variant="contained" color="primary" onClick={updateUserData}>
+      <Button variant="contained" color="primary" onClick={handleSubmit}>
         {submitting ? <CircularProgress /> : 'Update field(s)'}
       </Button>
     </Box>

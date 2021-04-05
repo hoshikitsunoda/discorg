@@ -25,15 +25,7 @@ import { countObjectKeys } from '../../utils/helper'
 import Stats from './Stats'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 660,
-    margin: '0 auto',
-
-    [theme.breakpoints.down('sm')]: {
-      maxWidth: 'none',
-      margin: -8,
-    },
-  },
+  root: {},
   userInfo: {
     display: 'flex',
     justifyContent: 'center',
@@ -68,7 +60,6 @@ const useStyles = makeStyles((theme) => ({
   },
   avatarWrapper: {
     display: 'flex',
-    alignItems: 'center',
     flexDirection: 'column',
     marginBottom: 16,
   },

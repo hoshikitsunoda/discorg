@@ -37,7 +37,8 @@ const useData = (id) => {
       setSubmitting(true)
       try {
         const { data } = await axios.get(url)
-        if (uid && data) {
+
+        if (data) {
           setData(data)
         }
         setSubmitting(false)

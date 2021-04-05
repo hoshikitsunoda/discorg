@@ -80,7 +80,9 @@ const Header = ({ title }) => {
         >
           <Box display="flex" alignItems="center" p={2}>
             {title !== 'home' && (
-              <img src={Logo} alt="discorg logo" className={classes.logo} />
+              <Link to="/">
+                <img src={Logo} alt="discorg logo" className={classes.logo} />
+              </Link>
             )}
             <List
               component="nav"

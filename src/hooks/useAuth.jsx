@@ -81,6 +81,7 @@ const useAuth = () => {
         user: null,
       })
       localStorage.removeItem('discorg_user_information')
+      setUser({})
       history.push('/signin')
     } catch (err) {
       toast.error(err.message)
